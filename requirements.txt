@@ -3,3 +3,6 @@ langchain-core
 langchain-text-splitters
 pymupdf
 ipykernel
+dotenv
+langchain
+langchain-groq

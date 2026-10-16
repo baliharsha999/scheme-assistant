@@ -1,0 +1,16 @@
+# Environment variables and secrets
+.env
+.env.*
+
+# Keep an example configuration file if you create one
+!.env.example
+
+# Python virtual environment
+.venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/

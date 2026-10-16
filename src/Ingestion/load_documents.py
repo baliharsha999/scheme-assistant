@@ -105,6 +105,5 @@ def load_documents():
                         })
     return documents
 
-if __name__ == "__main__":
-    document_loaders = load_documents()
-    print(f"found {len(document_loaders)} documents")
+document_loaders = load_documents()
+print(f"found {len(document_loaders)} documents")
