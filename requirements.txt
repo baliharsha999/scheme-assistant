@@ -9,3 +9,4 @@ langchain-groq
 sentence-transformers
 chromadb
 rank-bm25
+FlagEmbedding
