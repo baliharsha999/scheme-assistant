@@ -3,7 +3,7 @@ from src.Ingestion.vector_store import get_collection
 
 embeddings_model = SentenceTransformer("BAAI/bge-m3")
 
-def dense_search(query , k = 10)
+def dense_search(query , k = 10):
     # to search in vector database we need to get collection
     collection = get_collection()
     # we need to convert the query into embeddins
