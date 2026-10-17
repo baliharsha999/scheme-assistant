@@ -6,3 +6,5 @@ ipykernel
 dotenv
 langchain
 langchain-groq
+sentence-transformers
+chromadb

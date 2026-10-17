@@ -27,6 +27,3 @@ def split_documents(documents):
     return chunked_documents
 
 chunked_documents = split_documents(document_loaders)
-
-print("Original records:", len(document_loaders))
-print("Total chunks:", len(chunked_documents))

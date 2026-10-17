@@ -106,4 +106,3 @@ def load_documents():
     return documents
 
 document_loaders = load_documents()
-print(f"found {len(document_loaders)} documents")
