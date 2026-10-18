@@ -10,3 +10,5 @@ sentence-transformers
 chromadb
 rank-bm25
 FlagEmbedding
+typing
+pydantic

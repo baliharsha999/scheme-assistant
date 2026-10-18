@@ -23,7 +23,7 @@ def reciprocal_rank_fusion(result_lists , k = 60 , top_n =10):
         })
     return fused_results
 
-# to give the reranker we must pair the query and doc text to compare and rank
+# to give the reranker we must combine the query and doc text to compare and rank
 def reranker(query,fused_results,n = 5):
     reranker = FlagReranker(
         "BAAI/bge-reranker-v2-m3",
@@ -41,9 +41,6 @@ def reranker(query,fused_results,n = 5):
         reverse = True
     )
     top_documents = reranked_results[:n]
+    # we need to return only the top_documents for c rag as it will check the relevant scores unlike the basic rag
 
-    context = "\n\n".join(
-        doc["text"] for doc in top_documents
-    )
-
-    return context
+    return top_documents

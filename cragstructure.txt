@@ -1,0 +1,88 @@
+                    USER QUERY
+                        |
+                        v
+               HYBRID RETRIEVAL
+              (BM25 + Dense Search)
+                        |
+                        v
+               RECIPROCAL RANK FUSION
+                        |
+                        v
+                    RERANKER
+                        |
+                        v
+                TOP-K DOCUMENTS
+                        |
+                        v
+              RETRIEVAL EVALUATOR
+                        |
+          +-------------+-------------+
+          |             |             |
+          v             v             v
+        CORRECT      AMBIGUOUS     INCORRECT
+          |             |             |
+          |             |             v
+          |             |       QUERY REWRITING
+          |             |             |
+          |             |             v
+          |             |         WEB SEARCH
+          |             |             |
+          |             |             v
+          |             |       SEARCH RESULTS
+          |             |             |
+          +-------------+-------------+
+                        |
+                        v
+                KNOWLEDGE REFINEMENT
+                        |
+                        v
+              DECOMPOSE INTO PASSAGES
+                        |
+                        v
+                 FILTER PASSAGES
+                        |
+                        v
+                SELECT USEFUL EVIDENCE
+                        |
+                        v
+               REFINED KNOWLEDGE
+                        |
+                        v
+              EVIDENCE SUFFICIENCY
+                        |
+                 +------+------+
+                 |             |
+                 v             v
+             SUFFICIENT    INSUFFICIENT
+                 |             |
+                 v             v
+          GENERATE ANSWER   CORRECTIVE RETRY
+                 |             |
+                 |             v
+                 |       REWRITE QUERY
+                 |             |
+                 |             v
+                 |        WEB SEARCH
+                 |             |
+                 |             v
+                 |    KNOWLEDGE REFINEMENT
+                 |             |
+                 |             v
+                 |     CHECK SUFFICIENCY
+                 |             |
+                 |        +----+----+
+                 |        |         |
+                 |        v         v
+                 |   SUFFICIENT  INSUFFICIENT
+                 |        |         |
+                 |        v         v
+                 |     GENERATE   ABSTAIN
+                 |      ANSWER
+                 |        |
+                 +--------+
+                          |
+                          v
+                 CITATION VERIFICATION
+                          |
+                          v
+                   FINAL RESPONSE
