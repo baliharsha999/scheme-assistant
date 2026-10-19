@@ -1,4 +1,10 @@
-def search_web(rewritten_query: str,tavily_client,) -> list[dict]:
+import os
+from dotenv import load_dotenv
+from tavily import TavilyClient
+
+load_dotenv()
+tavily_api_key = os.getnev("TAVILY_API_KEY")
+def search_web(rewritten_query: str) -> list[dict]:
     """
     Search the web using Tavily and return normalized results
     each result is represented as a dictionary so that it can be compatible with the evidence
@@ -8,6 +14,7 @@ def search_web(rewritten_query: str,tavily_client,) -> list[dict]:
     if not rewritten_query.strip():
         raise ValueError("the rewritten query cannot be empty")
 
+    tavily_client = TavilyClient(api_key=tavily_api_key)
     response = tavily_client.search(
         query = rewritten_query,
         max_results = 5,

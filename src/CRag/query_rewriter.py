@@ -70,11 +70,7 @@ def create_query_rewriter(llm):
 
     return prompt | structured_llm
 
-def rewrite_query(
-    llm,
-    query: str,
-    missing_information: list[str],
-) -> RewrittenQuery:
+def rewrite_query(llm,query: str,missing_information: list[str],) -> RewrittenQuery:
     """
     Rewrite the original query using the missing information
     identified by the evidence sufficiency evaluator.

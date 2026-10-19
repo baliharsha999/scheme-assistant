@@ -13,4 +13,4 @@ FlagEmbedding
 typing
 pydantic
 langgraph
-typing
+tavily

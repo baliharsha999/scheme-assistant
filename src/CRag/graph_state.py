@@ -8,12 +8,12 @@ class Cragstate(TypedDict, total=False):
     ambiguous_documents: list[dict]# done
     irrelevant_documents: list[dict]# done
     refined_documents: list[dict]# done
-    evidence_documents: list[dict]
-    evidence_sufficient: bool
-    evidence_reason: str
-    missing_information: list[str]
-    rewritten_query: str
-    web_documents: list[dict]
+    evidence_documents: list[dict]#done
+    evidence_sufficient: bool#done
+    evidence_reason: str#done
+    missing_information: list[str]#done
+    rewritten_query: str#done
+    web_documents: list[dict]#done
     retry_count: int
     max_retries: int
     answer: str
