@@ -1,6 +1,5 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from src.CRag.schemas import RetrievalEvalution
-from src.CRag.retrieval_evaluator import structured_llm
 from langchain_core.prompts import ChatPromptTemplate
 from src.CRag.schemas import RefinedDocuments
 
@@ -34,6 +33,9 @@ def create_passage_evaluator(llm):
     """
     create an evaluator that assigns scores one passage at a time
     """
+    structured_llm = llm.with_structured_output(
+        RefinedDocuments
+    )
     prompt = ChatPromptTemplate.from_messages([
         (
             "system",
