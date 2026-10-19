@@ -25,7 +25,8 @@ def build_bm25_index():
 
 # now we should search te bm25 indexing using keyword search
 
-def bm25_search(query , bm25 , documents, k = 10):
+def bm25_search(query , k = 10):
+    bm25 , documents = build_bm25_index()
     query_tokens = query.lower().split()
 
     scores = bm25.get_scores(query_tokens)
