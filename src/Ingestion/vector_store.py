@@ -2,6 +2,7 @@ import chromadb
 from src.Ingestion.embeddings import embeddings,ids,texts,metadatas
 
 def get_collection():
+    embeddings,ids,texts,metadatas = embeddings()
     client = chromadb.PersistentClient(
         path="./data/ChromaDB"
     )
@@ -12,6 +13,7 @@ def get_collection():
     return collection
 
 def store_embeddings(ids, texts, metadatas, embeddings):
+    embeddings,ids,texts,metadatas = embeddings()
     collection = get_collection()
 
     collection.upsert(

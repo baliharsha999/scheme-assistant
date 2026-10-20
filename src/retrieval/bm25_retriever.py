@@ -3,9 +3,7 @@ from src.Ingestion.vector_store import get_collection
 
 # for bm25 we need its seperate indexing so formatting data into its own indexing
 def build_bm25_index():
-    collection = get_collection(
-        "welfare_schemes"
-    )
+    collection = get_collection()
     results = collection.get(
         include = ["documents","metadatas"],
     )

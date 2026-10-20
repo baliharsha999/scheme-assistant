@@ -10,11 +10,3 @@ llm = init_chat_model(
     api_key=os.getenv("GROQ_API_KEY"),
     temperature=0.2
 )
-
-grader_llm = init_chat_model(
-    "grok-4.3",
-    model_provider = "groq",
-    api_key=os.getenv("GROQ_API_KEY"),
-    temperature=0
-)
-print("all good ")

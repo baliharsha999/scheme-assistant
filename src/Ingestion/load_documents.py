@@ -103,6 +103,8 @@ def load_documents():
                                 "content_type": "text"
                             }
                         })
-    return documents
 
-document_loaders = load_documents()
+            document_loaders = load_documents()
+                        
+    return document_loaders
+

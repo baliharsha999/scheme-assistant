@@ -180,3 +180,79 @@ def assemble_evidence_node(state: Cragstate):
     return {
         "evidence_documents": evidence_documents
     }
+
+def web_assemble_evidence_node(state: Cragstate):
+    relevant_documents = state.get("web_relevant_documents", [])
+    refined_documents = state.get("web_refined_documents", [])
+    evidence_documents = []
+
+    for item in relevant_documents:
+        document = item.get("document", item)
+        evidence_documents.append(document)
+
+    for document in refined_documents:
+
+        # Converting Pydantic objects into dictionaries
+        if hasattr(document, "model_dump"):
+            document = document.model_dump()
+
+        # Normalize the passage text
+        if "text" in document and "content" not in document:
+            document = {
+                **document,
+                "content": document["text"]
+            }
+
+        evidence_documents.append(document)
+
+    return {
+        "web_evidence_documents": evidence_documents
+    }
+
+
+def evaluate_web_documents_node(state: Cragstate):
+    query = state["rewritten_query"]
+    documents = state.get("web_documents", [])
+
+    evaluation = evaluate_retrieval(
+        llm,
+        query,
+        documents
+    )
+
+    return {
+        "relevant_web_documents": evaluation["relevant"],
+        "ambiguous_web_documents": evaluation["ambiguous"],
+        "irrelevant_web_documents": evaluation["irrelevant"]
+
+    }
+def web_evidence_evaluation_node(state: Cragstate):
+    query = state["query"]
+    documents = state["evidence_documents"]
+
+    evaluation = evaluate_evidence(
+        llm,
+        query,
+        documents
+    )
+
+    return {
+        "web_evidence_sufficient": evaluation.sufficient,
+        "web_evidence_reason": evaluation.reason,
+        "web_missing_information": evaluation.missing_information
+    }
+
+def refine_web_documents_node(state: Cragstate):
+    query = state["rewritten_query"]
+    ambiguous_documents = state.get("ambiguous_web_documents", [])
+
+    refined_documents = refine_ambiguous_documents(
+        llm,
+        query,
+        ambiguous_documents,
+        0.7
+    )
+
+    return {
+        "refined_web_documents": refined_documents
+    }

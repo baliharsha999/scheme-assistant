@@ -20,6 +20,14 @@ class Cragstate(TypedDict, total=False):
     citations: list[dict]
     abstained: bool
     abstention_reason: str
-    bm25_results = list[dict]# done
-    dense_results = list[dict]# done
-    reranked_results = list[dict]# done
+    bm25_results : list[dict]# done
+    dense_results : list[dict]# done
+    reranked_results : list[dict]# done
+    relevant_web_documents : list[dict]
+    ambiguous_web_documents : list[dict]
+    irrelevant_web_documents : list[dict]
+    web_evidence_sufficient: bool
+    web_evidence_reason: str
+    web_missing_information: list[str]
+    web_evidence_documents: list[dict] 
+    refined_web_docs : list[dict]

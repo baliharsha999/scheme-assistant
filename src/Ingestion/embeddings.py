@@ -41,14 +41,15 @@ def prepare_data(chunked_documents):
 
     return ids, texts, metadatas
 
-ids, texts,metadatas = prepare_data(chunked_documents)
+def embeddings():
+    ids, texts,metadatas = prepare_data(chunked_documents)
 
-embedding_model = get_embedding_model()
+    embedding_model = get_embedding_model()
 
-embeddings = embedding_model.encode(
-    texts,
-    batch_size=16,
-    normalize_embeddings=True,
-    show_progress_bar=True
-).tolist()
-print("all good")
+    embeddings = embedding_model.encode(
+        texts,
+        batch_size=16,
+        normalize_embeddings=True,
+        show_progress_bar=True
+    ).tolist()
+    return embeddings , ids , texts , metadatas
