@@ -1,11 +1,13 @@
-from rank_bm25 import BM250kapi
+from rank_bm25 import BM25Okapi
 from src.Ingestion.vector_store import get_collection
 
 # for bm25 we need its seperate indexing so formatting data into its own indexing
 def build_bm25_index():
-    collection = get_collection()
+    collection = get_collection(
+        "welfare_schemes"
+    )
     results = collection.get(
-        include = ["documents","metadatas"]
+        include = ["documents","metadatas"],
     )
     documents = []
 
@@ -20,7 +22,7 @@ def build_bm25_index():
         document["text"].lower().split() for document in documents
     ]
     #bm25 is also a tokenizer
-    bm25 = BM250kapi(tokenized_docs)
+    bm25 = BM25Okapi(tokenized_docs)
     return bm25,documents
 
 # now we should search te bm25 indexing using keyword search

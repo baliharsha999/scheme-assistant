@@ -1,5 +1,5 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from load_documents import document_loaders
+from src.Ingestion.load_documents import document_loaders
 
 def split_documents(documents):
     chunked_documents = []

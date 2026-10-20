@@ -28,4 +28,5 @@ def dense_search(query , k = 10):
             "distance":results["distances"][0][i]
         })
 
+
     return documents

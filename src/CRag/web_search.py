@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from tavily import TavilyClient
 
 load_dotenv()
-tavily_api_key = os.getnev("TAVILY_API_KEY")
+tavily_api_key = os.getenv("TAVILY_API_KEY")
 def search_web(rewritten_query: str) -> list[dict]:
     """
     Search the web using Tavily and return normalized results

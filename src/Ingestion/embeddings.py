@@ -1,5 +1,5 @@
 from sentence_transformers import SentenceTransformer
-from chunking import chunked_documents
+from src.Ingestion.chunking import chunked_documents
 
 
 def get_embedding_model():

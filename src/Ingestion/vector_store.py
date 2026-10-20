@@ -1,5 +1,5 @@
 import chromadb
-from embeddings import embeddings,ids,texts,metadatas
+from src.Ingestion.embeddings import embeddings,ids,texts,metadatas
 
 def get_collection():
     client = chromadb.PersistentClient(

@@ -1,7 +1,7 @@
 from src.CRag.graph_state import Cragstate
-from src.retrival.bm25_retriever import bm25_search
-from src.retrival.dense_retriever import dense_search
-from src.retrival.hybrid_search import (reciprocal_rank_fusion,reranker)
+from src.retrieval.bm25_retriever import bm25_search
+from src.retrieval.dense_retriever import dense_search
+from src.retrieval.hybrid_search import (reciprocal_rank_fusion,reranker)
 from src.CRag.retrieval_evaluator import evaluate_retrieval
 from src.llm.model import llm
 from src.CRag.knowledge_refinement import refine_ambiguous_documents
@@ -68,7 +68,7 @@ def knowledge_refine_node(state:Cragstate):
     refined_documents = refine_ambiguous_documents(llm,query,ambiguous_documents,0.7)
 
     return {
-        "refinef_documents" : refined_documents
+        "refined_documents" : refined_documents
     }
 # Evidence sufficiency evaluation
 def evidence_evaluation_node(state: Cragstate):
@@ -148,4 +148,35 @@ def abstain_node(state: Cragstate):
         "citations": [],
         "abstained": True,
         "abstention_reason": reason
+    }
+
+# assemble node to assemble ambigoues and relevant
+# Evidence assembly node
+
+def assemble_evidence_node(state: Cragstate):
+    relevant_documents = state.get("relevant_documents", [])
+    refined_documents = state.get("refined_documents", [])
+    evidence_documents = []
+
+    for item in relevant_documents:
+        document = item.get("document", item)
+        evidence_documents.append(document)
+
+    for document in refined_documents:
+
+        # Converting Pydantic objects into dictionaries
+        if hasattr(document, "model_dump"):
+            document = document.model_dump()
+
+        # Normalize the passage text
+        if "text" in document and "content" not in document:
+            document = {
+                **document,
+                "content": document["text"]
+            }
+
+        evidence_documents.append(document)
+
+    return {
+        "evidence_documents": evidence_documents
     }
