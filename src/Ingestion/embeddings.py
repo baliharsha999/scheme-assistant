@@ -5,12 +5,12 @@ from src.Ingestion.chunking import chunked_documents
 def get_embedding_model():
     return SentenceTransformer("BAAI/bge-m3")
 
-def prepare_data(chunked_documents):
+def prepare_data(chunked_docs):
     ids = []
     texts = []
     metadatas = []
 
-    for document in chunked_documents:
+    for document in chunked_docs:
         text = document["text"]
         metadata = document["metadata"]
 
@@ -20,7 +20,6 @@ def prepare_data(chunked_documents):
         content_type = metadata["content_type"]
         chunk_index = metadata["chunk_index"]
         table_index = metadata.get("table_index")
-        scheme = metadata["scheme"]
 
         if table_index is not None:
             chunk_id = (
@@ -35,21 +34,22 @@ def prepare_data(chunked_documents):
 
         ids.append(chunk_id)
         texts.append(text)
-
-        # Preserve ALL original metadata
         metadatas.append(metadata.copy())
 
     return ids, texts, metadatas
 
 def embeddings():
-    ids, texts,metadatas = prepare_data(chunked_documents)
+    chunk_docs = chunked_documents()
+
+    ids, texts, metadatas = prepare_data(chunk_docs)
 
     embedding_model = get_embedding_model()
 
-    embeddings = embedding_model.encode(
+    vectors = embedding_model.encode(
         texts,
         batch_size=16,
         normalize_embeddings=True,
         show_progress_bar=True
     ).tolist()
-    return embeddings , ids , texts , metadatas
+
+    return vectors, ids, texts, metadatas
