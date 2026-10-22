@@ -101,3 +101,14 @@ class RewrittenQuery(BaseModel):
     reason : str = Field(
         description = "why the original query needs rewritting"
     )
+
+class PassageEvaluation(BaseModel):
+    score: float = Field(
+        description="Passage relevance score between 0.0 and 1.0",
+        ge=0.0,
+        le=1.0
+    )
+
+    reason: str = Field(
+        description="Brief explanation of the relevance score"
+    )

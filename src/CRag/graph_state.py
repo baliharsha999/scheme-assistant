@@ -31,3 +31,4 @@ class Cragstate(TypedDict, total=False):
     web_missing_information: list[str]
     web_evidence_documents: list[dict] 
     refined_web_docs : list[dict]
+    rrf_results: list[dict]  # RRF-fused retrieval results

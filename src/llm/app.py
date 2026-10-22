@@ -1,9 +1,24 @@
 from src.CRag.graph import builder
+from fastapi import FastAPI
+from pydantic import BaseModel
 
-graph = builder.compile()
+class State(BaseModel,total = False):
+    query : str
+    result : list[dict]
+    answer : str
 
-result = graph.invoke({
-    "query": "What are the eligibility criteria for a scholarship scheme?"
-})
+app = FastAPI()
 
-print(result)
+
+
+@app.post("/chat")
+def rag_bot(state:State):
+    query = State[query]
+
+    result = builder.invoke({
+        "query":query
+    })
+
+    return {
+        "answer":result["answer"]
+    }

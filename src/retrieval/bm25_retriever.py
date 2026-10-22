@@ -1,47 +1,57 @@
 from rank_bm25 import BM25Okapi
 from src.Ingestion.vector_store import get_collection
 
-# for bm25 we need its seperate indexing so formatting data into its own indexing
 def build_bm25_index():
+
     collection = get_collection()
+
     results = collection.get(
-        include = ["documents","metadatas"],
+        include=["documents", "metadatas"]
     )
+
     documents = []
 
-    for i,text in enumerate(results["documents"]):
+    for i, text in enumerate(results["documents"] or []):
+
         documents.append({
-            "id" : results["ids"][i],
-            "text":text,
-            "metadatas":results["metadatas"][i]
+            "id": results["ids"][i],
+            "text": text,
+            "metadata": (results["metadatas"] or [])[i]
         })
-    #tokenixe the document text
+
+    if not documents:
+        return None, []
+
     tokenized_docs = [
-        document["text"].lower().split() for document in documents
+        document["text"].lower().split()
+        for document in documents
     ]
-    #bm25 is also a tokenizer
+
     bm25 = BM25Okapi(tokenized_docs)
-    return bm25,documents
 
-# now we should search te bm25 indexing using keyword search
+    return bm25, documents
 
-def bm25_search(query , k = 10):
-    bm25 , documents = build_bm25_index()
+def bm25_search(query, k=10):
+
+    bm25, documents = build_bm25_index()
+
+    if bm25 is None:
+        return []
+
     query_tokens = query.lower().split()
 
     scores = bm25.get_scores(query_tokens)
 
-    #it compares and give some scores and we need to take top k in it for that e need to sort
-
     sorted_indices = sorted(
         range(len(scores)),
-        key = lambda i : scores[i],
-        reverse = True
+        key=lambda i: scores[i],
+        reverse=True
     )
 
     results = []
 
     for i in sorted_indices:
+
         if scores[i] <= 0:
             continue
 
@@ -52,7 +62,7 @@ def bm25_search(query , k = 10):
             "bm25_score": float(scores[i])
         })
 
-        if len(results) == k:
+        if len(results) >= k:
             break
 
     return results

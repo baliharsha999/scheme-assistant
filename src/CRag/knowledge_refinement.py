@@ -1,76 +1,86 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from src.CRag.schemas import RetrievalEvalution
 from langchain_core.prompts import ChatPromptTemplate
-from src.CRag.schemas import RefinedDocuments
+
+from src.CRag.schemas import PassageEvaluation, RefinedDocuments
+
 
 def split_into_passages(document: dict) -> list[dict]:
     """
-    Split an ordinary Python dictionary's content into passages.
+    Split a retrieved document into smaller passages while
+    preserving its source metadata.
     """
+    text = document.get("content") or document.get("text", "")
+
+    if not text:
+        return []
 
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=200,
         chunk_overlap=50,
     )
 
-    passages = splitter.split_text(
-        document["content"]
-    )
+    passages = splitter.split_text(text)
 
     refined_passages = []
+
+    metadata = document.get("metadata") or {}
+
+    source = document.get(
+        "source",
+        metadata.get("source", "Unknown")
+    )
+
+    page = document.get(
+        "page",
+        metadata.get("page")
+    )
+
+    section = document.get(
+        "section",
+        metadata.get("section")
+    )
 
     for passage in passages:
         refined_passages.append({
             "content": passage,
-            "source": document.get("source", "Unknown"),
-            "page": document.get("page"),
-            "section": document.get("section"),
+            "source": source,
+            "page": page,
+            "section": section,
         })
 
     return refined_passages
 
+
 def create_passage_evaluator(llm):
-    """
-    create an evaluator that assigns scores one passage at a time
-    """
     structured_llm = llm.with_structured_output(
-        RefinedDocuments
+        PassageEvaluation,
+        method="json_mode"
     )
+
     prompt = ChatPromptTemplate.from_messages([
         (
             "system",
             """
-            You are evaluating passages for a government
-            welfare scheme assistant.
+            You evaluate passages for a government welfare scheme assistant.
 
-            Evaluate how relevant the passage is to the user's query.
+            Score relevance from 0.0 to 1.0.
 
-            Assign a score between 0.0 and 1.0.
+            0.0-0.29: Irrelevant.
+            0.30-0.69: Partially relevant or ambiguous.
+            0.70-1.0: Strongly relevant and useful evidence.
 
-            Scoring guidelines:
+            Evaluate the actual information, not just keyword overlap.
+            Do not invent facts.
 
-            0.0 - 0.29:
-            The passage is irrelevant to the query.
-
-            0.30 - 0.69:
-            The passage is partially relevant or ambiguous.
-
-            0.70 - 1.0:
-            The passage is strongly relevant and provides
-            useful supporting evidence.
-
-            Evaluate the actual information in the passage.
-            Do not reward keyword overlap alone.
-
-            Do not invent facts that are not present.
-
-            Return a score and a concise explanation.
-            """           
+            Return valid JSON with exactly these fields:
+            - score: a number between 0.0 and 1.0
+            - reason: a concise explanation
+            """
         ),
         (
             "human",
             """
-            User Query:
+            User query:
             {query}
 
             Passage:
@@ -79,14 +89,10 @@ def create_passage_evaluator(llm):
         ),
     ])
 
-    return prompt|structured_llm
+    return prompt | structured_llm
 
 def evaluate_passage(evaluator, query: str, passage: dict) -> dict:
-    """
-    Evaluate one passage and preserve its source metadata.
-    """
-
-    result: RetrievalEvalution = evaluator.invoke({
+    result = evaluator.invoke({
         "query": query,
         "content": passage["content"],
     })
@@ -105,7 +111,7 @@ def refine_ambiguous_documents(
 ) -> list[RefinedDocuments]:
     """
     Split ambiguous documents into passages, evaluate each
-    passage, and get sufficiently relevant evidence.
+    passage, and retain sufficiently relevant evidence.
     """
 
     evaluator = create_passage_evaluator(llm)
@@ -114,13 +120,16 @@ def refine_ambiguous_documents(
 
     for item in ambiguous_documents:
 
-        # Extract the original retrieved document.
-        document = item["document"]
+        document = item.get("document", item)
 
-        # Split it into smaller passages.
+        if not isinstance(document, dict):
+            if hasattr(document, "model_dump"):
+                document = document.model_dump()
+            else:
+                continue
+
         passages = split_into_passages(document)
 
-        # Evaluate every passage independently.
         for passage in passages:
 
             result = evaluate_passage(
@@ -129,7 +138,6 @@ def refine_ambiguous_documents(
                 passage=passage,
             )
 
-            # Retain passages that pass the threshold.
             if result["score"] >= threshold:
 
                 refined_document = RefinedDocuments(

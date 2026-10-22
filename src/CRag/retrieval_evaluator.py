@@ -117,7 +117,7 @@ def evaluate_document(
     result: RetrievalEvalution = evaluator.invoke(
         {
             "query": query,
-            "content": document["content"],
+            "content": document.get("content", document.get("text", "")),
             "source": document.get("source", "Unknown"),
             "page": document.get("page", "Unknown"),
         }

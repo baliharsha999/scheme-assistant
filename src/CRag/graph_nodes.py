@@ -102,27 +102,61 @@ def web_search_node(state:Cragstate):
 # generating answer node
 def generate_answer_node(state: Cragstate):
     query = state["query"]
-    documents = state["evidence_documents"]
+    documents = state.get("evidence_documents", [])
 
-    # Construct a context from the evidence.
-    context = "\n\n".join(
-        doc.get("content", doc.get("text", ""))
-        for doc in documents
-    )
+    # Construct context with source information.
+    context_parts = []
+
+    for doc in documents:
+        text = doc.get("content") or doc.get("text", "")
+        metadata = doc.get("metadata") or {}
+
+        source = metadata.get(
+            "source",
+            doc.get("source", "Unknown source")
+        )
+        page = metadata.get(
+            "page",
+            doc.get("page", "Unknown")
+        )
+
+        if text.strip():
+            context_parts.append(
+                f"Source: {source}\n"
+                f"Page: {page}\n"
+                f"Content: {text}"
+            )
+
+    context = "\n\n".join(context_parts)
 
     prompt = f"""
-    You are a government welfare scheme assistant.
+    You are a helpful and accurate government welfare scheme assistant.
 
-    Answer the user's question using only the provided context.
-    Do not invent facts.
-    If a claim is unsupported by the context, do not include it.
-    Cite the provided sources where appropriate.
+    Your task is to answer the user's question using only the evidence provided.
 
-    Question:
+    Instructions:
+    1. Answer the user's question directly in clear, simple language.
+    2. Synthesize information from the relevant passages into a coherent answer.
+       Do not simply copy entire passages from the documents.
+    3. Include only information relevant to the user's question.
+    4. Use bullet points for eligibility criteria, benefits, required documents,
+       and application procedures when appropriate.
+    5.     Do not invent facts, eligibility conditions, benefits, dates, or procedures.
+    6. If a requested detail is missing from the evidence, explicitly say that
+       the available documents do not specify it.
+    7. Cite sources using the document filename and page number provided
+       in the context, for example: [Source: scheme_guidelines.pdf, Page 12].
+    8. Do not invent or guess source names or page numbers.
+    9. Do not mention internal technical terms such as chunks, embeddings,
+       retrievers, or RAG.
+
+    User question:
     {query}
 
-    Context:
+    Evidence:
     {context}
+
+    Provide a clear, concise answer for an ordinary citizen.
     """
 
     response = llm.invoke(prompt)

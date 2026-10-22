@@ -87,7 +87,7 @@ def evaluate_evidence(llm,query: str,documents : list ) -> EvidenceEvalution:
     """
     if not documents:
         return EvidenceEvalution(
-            sufficent = False,
+            sufficient = False,
             reason = "no evidence is available to answer the query",
             missing_information = [
                 "reliable information relevant to the users query"
