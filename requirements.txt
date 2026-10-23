@@ -16,3 +16,4 @@ langgraph
 tavily
 fastapi
 uvicorn
+langsmith

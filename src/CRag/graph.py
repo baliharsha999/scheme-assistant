@@ -13,7 +13,8 @@ from src.CRag.graph_nodes import (bm25_search_node,
                                   assemble_evidence_node,
                                   evaluate_web_documents_node,
                                   web_assemble_evidence_node,
-                                  refine_web_documents_node)
+                                  refine_web_documents_node,
+                                  web_evidence_evaluation_node)
 from langgraph.graph import StateGraph, START, END
 from src.CRag.graph_state import Cragstate
 
@@ -40,8 +41,9 @@ def route_after_evidence_evalution(state:Cragstate):
 
 #for web documents sufficiency
 def web_evidence_evalution_route(state: Cragstate):
-    if state.get("evidence_sufficient", False):
+    if state.get("web_evidence_sufficient", False):
         return "generate_answer"
+
     return "abstain"
 
 builder = StateGraph(Cragstate)
@@ -62,7 +64,10 @@ builder.add_node("abstain",abstain_node)
 builder.add_node("evaluate_web_documents",evaluate_web_documents_node)
 builder.add_node("web_assemble_evidence",web_assemble_evidence_node)
 builder.add_node("refine_web_documents",refine_web_documents_node)
-builder.add_node("web_evidence_evaluation",evidence_evaluation_node)
+builder.add_node(
+    "web_evidence_evaluation",
+    web_evidence_evaluation_node
+)
 # adding some of the edges
 builder.add_edge(START,"bm25_search")
 builder.add_edge(START,"dense_search")

@@ -92,12 +92,32 @@ def query_rewritten_node(state : Cragstate):
         "rewritten_query":rewritten_query.rewritten_query
     }
 # tavily web search node
-def web_search_node(state:Cragstate):
-    rewritten_query = state["rewritten_query"]
+def web_search_node(state: Cragstate):
+    rewrite_result = rewrite_query(
+        llm=llm,
+        query=state["query"],
+        missing_information=state.get("missing_information", []),
+    )
+
+    # Extract the actual query string from the Pydantic object
+    rewritten_query = rewrite_result.rewritten_query.strip()
+
+    print("Rewritten query:", repr(rewritten_query))
+
+    # Use the original question as a fallback if rewriting returns empty
+    if not rewritten_query:
+        rewritten_query = state["query"].strip()
+
+    if not rewritten_query:
+        raise ValueError("Both original and rewritten queries are empty.")
+
     web_search_results = search_web(rewritten_query)
+    print("TAVILY RESULTS:", len(web_search_results))
+    print("FIRST WEB RESULT:", web_search_results[:1])
 
     return {
-        "web_documents" : web_search_results
+        "rewritten_query": rewritten_query,
+        "web_documents": web_search_results,
     }
 # generating answer node
 def generate_answer_node(state: Cragstate):
@@ -253,6 +273,10 @@ def evaluate_web_documents_node(state: Cragstate):
         query,
         documents
     )
+    print("WEB DOCUMENTS RECEIVED:", len(documents))
+    print("RELEVANT WEB DOCUMENTS:", len(evaluation["relevant"]))
+    print("AMBIGUOUS WEB DOCUMENTS:", len(evaluation["ambiguous"]))
+    print("IRRELEVANT WEB DOCUMENTS:", len(evaluation["irrelevant"]))
 
     return {
         "relevant_web_documents": evaluation["relevant"],
@@ -262,13 +286,17 @@ def evaluate_web_documents_node(state: Cragstate):
     }
 def web_evidence_evaluation_node(state: Cragstate):
     query = state["query"]
-    documents = state["evidence_documents"]
+    documents = state.get("web_evidence_documents", [])
 
     evaluation = evaluate_evidence(
         llm,
         query,
         documents
     )
+    print("FINAL WEB EVIDENCE COUNT:", len(documents))
+    print("WEB EVIDENCE SUFFICIENT:", evaluation.sufficient)
+    print("WEB EVIDENCE REASON:", evaluation.reason)
+    print("MISSING INFORMATION:", evaluation.missing_information)
 
     return {
         "web_evidence_sufficient": evaluation.sufficient,
