@@ -8,7 +8,7 @@ from src.CRag.knowledge_refinement import refine_ambiguous_documents
 from src.CRag.evidence_evaluator import evaluate_evidence
 from src.CRag.query_rewriter import rewrite_query
 from src.CRag.web_search import search_web
-# bm25 node
+# bm25 node ----> 1
 def bm25_search_node(state: Cragstate):
     query = state["query"]
 
@@ -17,7 +17,7 @@ def bm25_search_node(state: Cragstate):
     return {
         "bm25_results": bm25_results
     }
-# dense search node
+# dense search node ---->1
 def dense_search_node(state:Cragstate):
     query = state["query"]
 
@@ -26,7 +26,7 @@ def dense_search_node(state:Cragstate):
     return {
         "dense_results" : dense_results
     }
-# rrf node
+# rrf node ------> 2
 def rrf_node(state: Cragstate):
     bm25_results = state["bm25_results"]
     dense_results = state["dense_results"]
@@ -41,7 +41,7 @@ def rrf_node(state: Cragstate):
     return {
         "rrf_results": fused_results
     }
-# reranking node
+# reranking node ------> 3
 def rerank_node(state: Cragstate):
     query = state["query"]
     fused_results = state["rrf_results"]
@@ -49,7 +49,7 @@ def rerank_node(state: Cragstate):
     return {
         "reranked_results": reranked_results
     }
-# if we connect all these then we will get the top k documents
+# if we connect all these then we will get the top k documents ------->4
 def evaluation_retrieval_node(state:Cragstate):
     query = state["query"]
     documents = state["reranked_results"]
@@ -60,7 +60,7 @@ def evaluation_retrieval_node(state:Cragstate):
         "ambiguous_documents": evaluation["ambiguous"],
         "irrelevant_documents": evaluation["irrelevant"]
     }
-# knowledge refinement node
+# knowledge refinement node  ------> 5
 def knowledge_refine_node(state:Cragstate):
     query = state["query"]
     ambiguous_documents = state["ambiguous_documents"]
@@ -70,7 +70,7 @@ def knowledge_refine_node(state:Cragstate):
     return {
         "refined_documents" : refined_documents
     }
-# Evidence sufficiency evaluation
+# Evidence sufficiency evaluation ------> 7
 def evidence_evaluation_node(state: Cragstate):
     query = state["query"]
     documents = state["evidence_documents"]
@@ -82,7 +82,7 @@ def evidence_evaluation_node(state: Cragstate):
         "evidence_sufficient": evidence_evaluation_results.sufficient,
         "missing_information": evidence_evaluation_results.missing_information
     }
-# query rewritting node for web search
+# query rewritting node for web search -------->8
 def query_rewritten_node(state : Cragstate):
     query = state["query"]
     missing_information = state["missing_information"]
@@ -91,7 +91,7 @@ def query_rewritten_node(state : Cragstate):
     return {
         "rewritten_query":rewritten_query.rewritten_query
     }
-# tavily web search node
+# tavily web search node  -------->9
 def web_search_node(state: Cragstate):
     rewrite_result = rewrite_query(
         llm=llm,
@@ -119,10 +119,15 @@ def web_search_node(state: Cragstate):
         "rewritten_query": rewritten_query,
         "web_documents": web_search_results,
     }
-# generating answer node
+# generating answer node ----->14
 def generate_answer_node(state: Cragstate):
     query = state["query"]
-    documents = state.get("evidence_documents", [])
+    if state["evidence_sufficient"]:
+            documents = state.get("evidence_documents", [])
+    elif state["web_evidence_sufficient"]:
+        documents = state.get("web_evidence_documents",[])
+    else:
+        documents=[]
 
     # Construct context with source information.
     context_parts = []
@@ -185,7 +190,7 @@ def generate_answer_node(state: Cragstate):
         "answer": response.content,
         "abstained": False
     }
-# if the sufficient documents are not found 
+# if the sufficient documents are not found -----> 14
 def abstain_node(state: Cragstate):
     reason = state.get(
         "evidence_reason",
@@ -205,8 +210,7 @@ def abstain_node(state: Cragstate):
     }
 
 # assemble node to assemble ambigoues and relevant
-# Evidence assembly node
-
+# Evidence assembly node ---------->6
 def assemble_evidence_node(state: Cragstate):
     relevant_documents = state.get("relevant_documents", [])
     refined_documents = state.get("refined_documents", [])
@@ -234,10 +238,10 @@ def assemble_evidence_node(state: Cragstate):
     return {
         "evidence_documents": evidence_documents
     }
-
+# the refined documents are then assemebled -------->12
 def web_assemble_evidence_node(state: Cragstate):
-    relevant_documents = state.get("web_relevant_documents", [])
-    refined_documents = state.get("web_refined_documents", [])
+    relevant_documents = state.get("relevant_web_documents", [])
+    refined_documents = state.get("refined_web_docs", [])
     evidence_documents = []
 
     for item in relevant_documents:
@@ -263,7 +267,7 @@ def web_assemble_evidence_node(state: Cragstate):
         "web_evidence_documents": evidence_documents
     }
 
-
+# the documents that we are getting from web are evaluated ---->10
 def evaluate_web_documents_node(state: Cragstate):
     query = state["rewritten_query"]
     documents = state.get("web_documents", [])
@@ -284,6 +288,8 @@ def evaluate_web_documents_node(state: Cragstate):
         "irrelevant_web_documents": evaluation["irrelevant"]
 
     }
+
+# the assembeled web documents are then evaluated for sufficiency -------> 13
 def web_evidence_evaluation_node(state: Cragstate):
     query = state["query"]
     documents = state.get("web_evidence_documents", [])
@@ -303,18 +309,22 @@ def web_evidence_evaluation_node(state: Cragstate):
         "web_evidence_reason": evaluation.reason,
         "web_missing_information": evaluation.missing_information
     }
-
+# the documents from web are then refined -------> 11
 def refine_web_documents_node(state: Cragstate):
     query = state["rewritten_query"]
     ambiguous_documents = state.get("ambiguous_web_documents", [])
 
+    print("AMBIGUOUS DOCUMENTS ENTERING REFINEMENT:", len(ambiguous_documents))
+
     refined_documents = refine_ambiguous_documents(
-        llm,
-        query,
-        ambiguous_documents,
-        0.7
+        llm=llm,
+        query=query,
+        ambiguous_documents=ambiguous_documents,
+        threshold=0.7
     )
 
+    print("DOCUMENTS AFTER REFINEMENT:", len(refined_documents))
+
     return {
-        "refined_web_documents": refined_documents
+        "refined_web_docs": refined_documents
     }
