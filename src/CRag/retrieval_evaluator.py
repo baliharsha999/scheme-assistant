@@ -1,5 +1,5 @@
 from typing import Literal
-
+import asyncio
 from langchain_core.prompts import ChatPromptTemplate
 
 from src.CRag.schemas import RetrievalEvalution
@@ -105,19 +105,19 @@ def create_retrieval_evaluator(llm):
     return prompt | structured_llm
 
 
-def evaluate_document(
+async def evaluate_document(
     evaluator,
     query: str,
     document: dict,
 ) -> dict:
-    """
-    Evaluate one ordinary Python dictionary representing a document.
-    """
 
-    result: RetrievalEvalution = evaluator.invoke(
+    result: RetrievalEvalution = await evaluator.ainvoke(
         {
             "query": query,
-            "content": document.get("content", document.get("text", "")),
+            "content": document.get(
+                "content",
+                document.get("text", "")
+            ),
             "source": document.get("source", "Unknown"),
             "page": document.get("page", "Unknown"),
         }
@@ -132,18 +132,11 @@ def evaluate_document(
         "classification": classification,
     }
 
-
-def evaluate_retrieval(
+async def evaluate_retrieval(
     llm,
     query: str,
     documents: list[dict],
 ) -> dict:
-    """
-    Evaluate retrieved documents individually.
-
-    Returns relevant, ambiguous, and irrelevant documents
-    in separate lists.
-    """
 
     if not documents:
         return {
@@ -156,20 +149,22 @@ def evaluate_retrieval(
 
     evaluator = create_retrieval_evaluator(llm)
 
+    results = await asyncio.gather(
+        *[
+            evaluate_document(
+                evaluator=evaluator,
+                query=query,
+                document=document,
+            )
+            for document in documents
+        ]
+    )
+
     relevant = []
     ambiguous = []
     irrelevant = []
-    results = []
 
-    for document in documents:
-
-        result = evaluate_document(
-            evaluator=evaluator,
-            query=query,
-            document=document,
-        )
-
-        results.append(result)
+    for result in results:
 
         if result["classification"] == "correct":
             relevant.append(result)
@@ -180,7 +175,10 @@ def evaluate_retrieval(
         else:
             irrelevant.append(result)
 
-    average_score = sum(result["score"] for result in results) / len(results)
+    average_score = (
+        sum(result["score"] for result in results)
+        / len(results)
+    )
 
     return {
         "results": results,

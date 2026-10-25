@@ -1,6 +1,11 @@
 from collections import defaultdict
 from FlagEmbedding import FlagReranker
 
+reranker = FlagReranker(
+        "BAAI/bge-reranker-v2-m3",
+        use_fp16 = false
+    )
+
 def reciprocal_rank_fusion(result_lists , k = 60 , top_n =10):
     scores = defaultdict(float)
     documents = {}
@@ -24,23 +29,40 @@ def reciprocal_rank_fusion(result_lists , k = 60 , top_n =10):
     return fused_results
 
 # to give the reranker we must combine the query and doc text to compare and rank
-def reranker(query,fused_results,n = 5):
-    reranker = FlagReranker(
-        "BAAI/bge-reranker-v2-m3",
-        use_fp16 = True
+from FlagEmbedding import FlagReranker
+
+reranker_model = FlagReranker(
+    "BAAI/bge-reranker-v2-m3",
+    use_fp16=True
+)
+
+
+def reranker(query, fused_results, n=5):
+
+    if not fused_results:
+        return []
+
+    pairs = [
+        [query, doc["text"]]
+        for doc in fused_results
+    ]
+
+    scores = reranker_model.compute_score(pairs)
+
+    if isinstance(scores, (int, float)):
+        scores = [scores]
+
+    reranked_results = []
+
+    for doc, score in zip(fused_results, scores):
+        reranked_results.append({
+            **doc,
+            "rerank_score": float(score)
+        })
+
+    reranked_results.sort(
+        key=lambda doc: doc["rerank_score"],
+        reverse=True
     )
-    pairs = [[query,doc["text"]] for doc in fused_results]
-    scores = reranker.compute_score(pairs)
 
-    for doc,score in zip(fused_results , scores):
-        doc["rerank_score"] = score
-
-    reranked_results = sorted(
-        fused_results,
-        key = lambda doc:doc["rerank_score"],
-        reverse = True
-    )
-    top_documents = reranked_results[:n]
-    # we need to return only the top_documents for c rag as it will check the relevant scores unlike the basic rag
-
-    return top_documents
+    return reranked_results[:n]

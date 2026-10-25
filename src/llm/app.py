@@ -1,5 +1,5 @@
 import traceback
-
+import asyncio 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
@@ -22,14 +22,14 @@ def home():
 
 
 @app.post("/chat")
-def chat(request: QueryRequest):
+async def chat(request: QueryRequest):
     print("\n========== CHAT ENDPOINT CALLED ==========")
     print("User query:", request.query)
 
     try:
         print("Starting CRAG graph execution...")
 
-        result = graph.invoke({
+        result = await graph.ainvoke({
             "query": request.query
         })
 
@@ -44,7 +44,7 @@ def chat(request: QueryRequest):
         }
 
     except Exception as e:
-        print("\n========== CRAG GRAPH ERROR ==========")
+        print("\n========== CRAG GRAPH ERROR ==========\n")
         traceback.print_exc()
 
         raise HTTPException(

@@ -1,5 +1,6 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.prompts import ChatPromptTemplate
+import asyncio
 
 from src.CRag.schemas import PassageEvaluation, RefinedDocuments
 
@@ -91,8 +92,8 @@ def create_passage_evaluator(llm):
 
     return prompt | structured_llm
 
-def evaluate_passage(evaluator, query: str, passage: dict) -> dict:
-    result = evaluator.invoke({
+async def evaluate_passage(evaluator, query: str, passage: dict) -> dict:
+    result = await evaluator.ainvoke({
         "query": query,
         "content": passage["content"],
     })
@@ -103,20 +104,23 @@ def evaluate_passage(evaluator, query: str, passage: dict) -> dict:
         "reason": result.reason,
     }
 
-def refine_ambiguous_documents(
+# Limit concurrent passage evaluations within this process.
+PASSAGE_EVALUATION_LIMIT = 5
+
+
+async def refine_ambiguous_documents(
     llm,
     query: str,
     ambiguous_documents: list[dict],
     threshold: float = 0.70,
 ) -> list[RefinedDocuments]:
-    """
-    Split ambiguous documents into passages, evaluate each
-    passage, and retain sufficiently relevant evidence.
-    """
+
+    if not ambiguous_documents:
+        return []
 
     evaluator = create_passage_evaluator(llm)
 
-    refined_evidence = []
+    passages_to_evaluate = []
 
     for item in ambiguous_documents:
 
@@ -129,25 +133,47 @@ def refine_ambiguous_documents(
                 continue
 
         passages = split_into_passages(document)
+        passages_to_evaluate.extend(passages)
 
-        for passage in passages:
+    if not passages_to_evaluate:
+        return []
 
-            result = evaluate_passage(
+    semaphore = asyncio.Semaphore(
+        PASSAGE_EVALUATION_LIMIT
+    )
+
+    async def evaluate_with_limit(passage):
+
+        async with semaphore:
+            return await evaluate_passage(
                 evaluator=evaluator,
                 query=query,
                 passage=passage,
             )
 
-            if result["score"] >= threshold:
+    results = await asyncio.gather(
+        *[
+            evaluate_with_limit(passage)
+            for passage in passages_to_evaluate
+        ]
+    )
 
-                refined_document = RefinedDocuments(
-                    text=passage["content"],
-                    source=passage["source"],
-                    page=passage["page"],
-                    section=passage["section"],
-                    relevance_score=result["score"],
-                )
+    refined_evidence = []
 
-                refined_evidence.append(refined_document)
+    for result in results:
+
+        if result["score"] >= threshold:
+
+            passage = result["passage"]
+
+            refined_document = RefinedDocuments(
+                text=passage["content"],
+                source=passage["source"],
+                page=passage["page"],
+                section=passage["section"],
+                relevance_score=result["score"],
+            )
+
+            refined_evidence.append(refined_document)
 
     return refined_evidence

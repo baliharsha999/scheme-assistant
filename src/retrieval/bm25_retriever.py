@@ -31,9 +31,12 @@ def build_bm25_index():
 
     return bm25, documents
 
+def get_bm25_index():
+    return build_bm25_index()
+
 def bm25_search(query, k=10):
 
-    bm25, documents = build_bm25_index()
+    bm25, documents = get_bm25_index()
 
     if bm25 is None:
         return []

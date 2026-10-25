@@ -8,23 +8,27 @@ from src.CRag.knowledge_refinement import refine_ambiguous_documents
 from src.CRag.evidence_evaluator import evaluate_evidence
 from src.CRag.query_rewriter import rewrite_query
 from src.CRag.web_search import search_web
+import asyncio
 # bm25 node ----> 1
-def bm25_search_node(state: Cragstate):
+async def bm25_search_node(state: Cragstate):
     query = state["query"]
 
-    bm25_results = bm25_search(query)
+    bm25_results = await asyncio.to_thread(bm25_search, query)
 
     return {
         "bm25_results": bm25_results
     }
 # dense search node ---->1
-def dense_search_node(state:Cragstate):
+async def dense_search_node(state: Cragstate):
     query = state["query"]
 
-    dense_results = dense_search(query)
+    dense_results = await asyncio.to_thread(
+        dense_search,
+        query
+    )
 
     return {
-        "dense_results" : dense_results
+        "dense_results": dense_results
     }
 # rrf node ------> 2
 def rrf_node(state: Cragstate):
@@ -42,18 +46,24 @@ def rrf_node(state: Cragstate):
         "rrf_results": fused_results
     }
 # reranking node ------> 3
-def rerank_node(state: Cragstate):
+async def rerank_node(state: Cragstate):
     query = state["query"]
     fused_results = state["rrf_results"]
-    reranked_results = reranker(query, fused_results)
+
+    reranked_results = await asyncio.to_thread(
+        reranker,
+        query,
+        fused_results
+    )
+
     return {
         "reranked_results": reranked_results
     }
 # if we connect all these then we will get the top k documents ------->4
-def evaluation_retrieval_node(state:Cragstate):
+async def evaluation_retrieval_node(state:Cragstate):
     query = state["query"]
     documents = state["reranked_results"]
-    evaluation = evaluate_retrieval(llm,query,documents)
+    evaluation = await evaluate_retrieval(llm,query,documents)
 
     return {
         "relevant_documents": evaluation["relevant"],
@@ -61,11 +71,11 @@ def evaluation_retrieval_node(state:Cragstate):
         "irrelevant_documents": evaluation["irrelevant"]
     }
 # knowledge refinement node  ------> 5
-def knowledge_refine_node(state:Cragstate):
+async def knowledge_refine_node(state:Cragstate):
     query = state["query"]
     ambiguous_documents = state["ambiguous_documents"]
 
-    refined_documents = refine_ambiguous_documents(llm,query,ambiguous_documents,0.7)
+    refined_documents = await refine_ambiguous_documents(llm,query,ambiguous_documents,0.7)
 
     return {
         "refined_documents" : refined_documents
@@ -92,26 +102,20 @@ def query_rewritten_node(state : Cragstate):
         "rewritten_query":rewritten_query.rewritten_query
     }
 # tavily web search node  -------->9
-def web_search_node(state: Cragstate):
-    rewrite_result = rewrite_query(
-        llm=llm,
-        query=state["query"],
-        missing_information=state.get("missing_information", []),
-    )
+async def web_search_node(state: Cragstate):
 
-    # Extract the actual query string from the Pydantic object
-    rewritten_query = rewrite_result.rewritten_query.strip()
+    rewritten_query = state.get("rewritten_query", "").strip()
 
-    print("Rewritten query:", repr(rewritten_query))
-
-    # Use the original question as a fallback if rewriting returns empty
     if not rewritten_query:
         rewritten_query = state["query"].strip()
 
     if not rewritten_query:
         raise ValueError("Both original and rewritten queries are empty.")
 
-    web_search_results = search_web(rewritten_query)
+    print("Rewritten query:", repr(rewritten_query))
+
+    web_search_results = await search_web(rewritten_query)
+
     print("TAVILY RESULTS:", len(web_search_results))
     print("FIRST WEB RESULT:", web_search_results[:1])
 
@@ -120,16 +124,19 @@ def web_search_node(state: Cragstate):
         "web_documents": web_search_results,
     }
 # generating answer node ----->14
-def generate_answer_node(state: Cragstate):
+async def generate_answer_node(state: Cragstate):
     query = state["query"]
-    if state["evidence_sufficient"]:
-            documents = state.get("evidence_documents", [])
-    elif state["web_evidence_sufficient"]:
-        documents = state.get("web_evidence_documents",[])
-    else:
-        documents=[]
 
-    # Construct context with source information.
+    if state["evidence_sufficient"]:
+        documents = state.get("evidence_documents", [])
+
+    elif state["web_evidence_sufficient"]:
+        documents = state.get("web_evidence_documents", [])
+
+    else:
+        documents = []
+
+    # Construct context with source information
     context_parts = []
 
     for doc in documents:
@@ -140,6 +147,7 @@ def generate_answer_node(state: Cragstate):
             "source",
             doc.get("source", "Unknown source")
         )
+
         page = metadata.get(
             "page",
             doc.get("page", "Unknown")
@@ -160,31 +168,41 @@ def generate_answer_node(state: Cragstate):
     Your task is to answer the user's question using only the evidence provided.
 
     Instructions:
+
     1. Answer the user's question directly in clear, simple language.
+
     2. Synthesize information from the relevant passages into a coherent answer.
        Do not simply copy entire passages from the documents.
+
     3. Include only information relevant to the user's question.
+
     4. Use bullet points for eligibility criteria, benefits, required documents,
        and application procedures when appropriate.
-    5.     Do not invent facts, eligibility conditions, benefits, dates, or procedures.
+
+    5. Do not invent facts, eligibility conditions, benefits, dates, or procedures.
+
     6. If a requested detail is missing from the evidence, explicitly say that
        the available documents do not specify it.
+
     7. Cite sources using the document filename and page number provided
        in the context, for example: [Source: scheme_guidelines.pdf, Page 12].
+
     8. Do not invent or guess source names or page numbers.
+
     9. Do not mention internal technical terms such as chunks, embeddings,
        retrievers, or RAG.
 
     User question:
+
     {query}
 
     Evidence:
+
     {context}
 
     Provide a clear, concise answer for an ordinary citizen.
     """
-
-    response = llm.invoke(prompt)
+    response = await llm.ainvoke(prompt)
 
     return {
         "answer": response.content,
@@ -310,13 +328,13 @@ def web_evidence_evaluation_node(state: Cragstate):
         "web_missing_information": evaluation.missing_information
     }
 # the documents from web are then refined -------> 11
-def refine_web_documents_node(state: Cragstate):
+async def refine_web_documents_node(state: Cragstate):
     query = state["rewritten_query"]
     ambiguous_documents = state.get("ambiguous_web_documents", [])
 
     print("AMBIGUOUS DOCUMENTS ENTERING REFINEMENT:", len(ambiguous_documents))
 
-    refined_documents = refine_ambiguous_documents(
+    refined_documents = await refine_ambiguous_documents(
         llm=llm,
         query=query,
         ambiguous_documents=ambiguous_documents,
