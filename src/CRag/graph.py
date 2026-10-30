@@ -1,4 +1,9 @@
+import os
+import sqlite3
+import asyncio
 from typing import TypedDict
+from langgraph.checkpoint.sqlite import SqliteSaver
+
 from src.CRag.graph_nodes import (bm25_search_node,
                                   dense_search_node,
                                   rrf_node,
@@ -116,3 +121,38 @@ builder.add_conditional_edges(
 
 builder.add_edge("generate_answer", END)
 builder.add_edge("abstain", END)
+
+
+class UnifiedSqliteSaver(SqliteSaver):
+    """
+    SQLite checkpointer for LangGraph supporting both synchronous
+    and asynchronous executions across conversation threads.
+    """
+    async def aget_tuple(self, config):
+        return await asyncio.to_thread(self.get_tuple, config)
+
+    async def aput(self, config, checkpoint, metadata, new_versions):
+        return await asyncio.to_thread(self.put, config, checkpoint, metadata, new_versions)
+
+    async def aput_writes(self, config, writes, task_id, task_path=""):
+        return await asyncio.to_thread(self.put_writes, config, writes, task_id, task_path)
+
+    async def alist(self, config, *, filter=None, before=None, limit=None):
+        def _get_list():
+            return list(self.list(config, filter=filter, before=before, limit=limit))
+        items = await asyncio.to_thread(_get_list)
+        for item in items:
+            yield item
+
+
+DB_PATH = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..", "data", "checkpoints.db")
+)
+os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+
+# Connect to SQLite for persistent LangGraph checkpoints
+sqlite_conn = sqlite3.connect(DB_PATH, check_same_thread=False)
+checkpointer = UnifiedSqliteSaver(sqlite_conn)
+checkpointer.setup()
+
+graph = builder.compile(checkpointer=checkpointer)

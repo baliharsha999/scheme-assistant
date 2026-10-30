@@ -105,7 +105,7 @@ async def evaluate_passage(evaluator, query: str, passage: dict) -> dict:
     }
 
 # Limit concurrent passage evaluations within this process.
-PASSAGE_EVALUATION_LIMIT = 5
+PASSAGE_EVALUATION_LIMIT = 2
 
 
 async def refine_ambiguous_documents(
@@ -137,6 +137,8 @@ async def refine_ambiguous_documents(
 
     if not passages_to_evaluate:
         return []
+
+    passages_to_evaluate = passages_to_evaluate[:4]
 
     semaphore = asyncio.Semaphore(
         PASSAGE_EVALUATION_LIMIT

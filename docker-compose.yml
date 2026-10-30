@@ -1,0 +1,33 @@
+services:
+  scheme-assistant-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scheme-assistant-api
+    command: ["uvicorn", "src.llm.app:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - PORT=8000
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+
+  scheme-assistant-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scheme-assistant-ui
+    command: ["streamlit", "run", "streamlit_app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped

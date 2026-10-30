@@ -1,0 +1,597 @@
+{
+  "dataset_name": "Welfare Scheme RAG Golden Dataset",
+  "model_used": "openai/gpt-oss-120b",
+  "total_examples": 59,
+  "examples": [
+    {
+      "input": "What is the name of the scheme mentioned in the document?",
+      "expected_output": "The scheme is called \"Mission Saksham Anganwadi and Poshan 2.0\".",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 1,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p1_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 Mission Saksham Anganwadi and Poshan 2.0 Scheme Guidelines Ministry of Women and Child Development Government of India"
+      ]
+    },
+    {
+      "input": "Which ministry issued the guidelines for the Mission Saksham Anganwadi and Poshan 2.0?",
+      "expected_output": "The guidelines were issued by the Ministry of Women and Child Development, Government of India.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 1,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p1_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 Mission Saksham Anganwadi and Poshan 2.0 Scheme Guidelines Ministry of Women and Child Development Government of India"
+      ]
+    },
+    {
+      "input": "What are the main sections listed in the contents of the Saksham Anganwadi and Poshan 2.0 guidelines?",
+      "expected_output": "The contents list the following main sections: 1. INTRODUCTION, 1.1 Vision, 1.2 Objectives, 1.3 Important components of Saksham Anganwadi and Poshan 2.0, 2. INSTITUTIONAL FRAMEWORK FOR IMPLEMENTATION, 2.1 Framework at Central Level, 2.2 Roles and responsibilities of State Administration, 2.3 Roles and responsibilities of District Administration, 2.4 Roles and Responsibilities of Anganwadi Workers.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 2,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p2_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 Contents 1. INTRODUCTION ................................................................................ 3 1.1 Vision ..................................................................................................................... 4 1.2 Objectives .............................................................................................................. 4 1.3 Important components of Saksham Anganwadi and Poshan 2.0 ............................. 5 2. INSTITUTIONAL FRAMEWORK FOR IMPLEMENTATION ............. 7 2.1 Framework at Central Level ................................................................................... 7 2.2 Roles and responsibilities of State Administration ................................................... 8 2.3 Roles and responsibilities of District Administration ................................................ 8 2.4 Roles and Responsibilities of Anganwadi Workers ................................................. 9 2.5 Ro"
+      ]
+    },
+    {
+      "input": "Which section of the guidelines covers the roles and responsibilities of Anganwadi Workers?",
+      "expected_output": "The roles and responsibilities of Anganwadi Workers are covered in section 2.4.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 2,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p2_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 Contents 1. INTRODUCTION ................................................................................ 3 1.1 Vision ..................................................................................................................... 4 1.2 Objectives .............................................................................................................. 4 1.3 Important components of Saksham Anganwadi and Poshan 2.0 ............................. 5 2. INSTITUTIONAL FRAMEWORK FOR IMPLEMENTATION ............. 7 2.1 Framework at Central Level ................................................................................... 7 2.2 Roles and responsibilities of State Administration ................................................... 8 2.3 Roles and responsibilities of District Administration ................................................ 8 2.4 Roles and Responsibilities of Anganwadi Workers ................................................. 9 2.5 Ro"
+      ]
+    },
+    {
+      "input": "Which section outlines the roles and responsibilities of Anganwadi Helpers?",
+      "expected_output": "Section 2.5 covers the roles and responsibilities of Anganwadi Helpers.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 2,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p2_c1",
+      "retrieval_context": [
+        "..................................... 8 2.4 Roles and Responsibilities of Anganwadi Workers ................................................. 9 2.5 Roles and responsibilities of Anganwadi Helpers .................................................. 11 2.6 Poshan Tracker.................................................................................................... 12 2.7 Fund Flow ............................................................................................................ 12 2.8 Funding Pattern ................................................................................................... 12 2.9 Social Audit .......................................................................................................... 12 2.10 Evaluation ............................................................................................................ 13 3. ANGANWADI SERVICES SCHEME ............................................... 14 3.1 Package of Services ...................."
+      ]
+    },
+    {
+      "input": "On which page can I find information about the Social Audit?",
+      "expected_output": "Information about the Social Audit is on page 12.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 2,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p2_c1",
+      "retrieval_context": [
+        "..................................... 8 2.4 Roles and Responsibilities of Anganwadi Workers ................................................. 9 2.5 Roles and responsibilities of Anganwadi Helpers .................................................. 11 2.6 Poshan Tracker.................................................................................................... 12 2.7 Fund Flow ............................................................................................................ 12 2.8 Funding Pattern ................................................................................................... 12 2.9 Social Audit .......................................................................................................... 12 2.10 Evaluation ............................................................................................................ 13 3. ANGANWADI SERVICES SCHEME ............................................... 14 3.1 Package of Services ...................."
+      ]
+    },
+    {
+      "input": "On which page does the 'Package of Services' subsection appear?",
+      "expected_output": "Page 14.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 2,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p2_c2",
+      "retrieval_context": [
+        "...................... 13 3. ANGANWADI SERVICES SCHEME ............................................... 14 3.1 Package of Services ............................................................................................ 14 3.1 Salient Features ................................................................................................... 14 3.2 Anganwadi Workers and Helpers: Qualification and Benefits under the Scheme ... 16 3.3 Supplementary Nutrition ....................................................................................... 17 3.2.1 Nutritional Norms ................................................................ 18 3.2.2 Cost Norms: ........................................................................ 18"
+      ]
+    },
+    {
+      "input": "Which subsection number covers the nutritional norms for the scheme?",
+      "expected_output": "Subsection 3.2.1 titled 'Nutritional Norms'.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 2,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p2_c2",
+      "retrieval_context": [
+        "...................... 13 3. ANGANWADI SERVICES SCHEME ............................................... 14 3.1 Package of Services ............................................................................................ 14 3.1 Salient Features ................................................................................................... 14 3.2 Anganwadi Workers and Helpers: Qualification and Benefits under the Scheme ... 16 3.3 Supplementary Nutrition ....................................................................................... 17 3.2.1 Nutritional Norms ................................................................ 18 3.2.2 Cost Norms: ........................................................................ 18"
+      ]
+    },
+    {
+      "input": "Which section of the guidelines covers the integration of fortified rice and millets?",
+      "expected_output": "Section 3.4 titled \"Diet Diversity including Integration of Fortified Rice and Millets\" covers that topic.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 3,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p3_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 3.4 Diet Diversity including Integration of Fortified Rice and Millets ............................. 18 3.5 Hot Cooked Meals ............................................................................................... 19 3.6 Take Home Ration (not raw ration) ....................................................................... 19 3.7 Periodicity of distribution of THR .......................................................................... 20 3.8 Development of Community Food Habits ............................................................. 20 3.9 Procurement of Supplementary Nutrition .............................................................. 20 3.10 Quality Testing ..................................................................................................... 21 3.11 Role of Panchayats .............................................................................................. 22 3.11.1 Outline of activities centered on Poshan Pa"
+      ]
+    },
+    {
+      "input": "Where in the document can I find information about the role of Panchayats?",
+      "expected_output": "Information about the role of Panchayats is in Section 3.11 \"Role of Panchayats\", which appears on page 22.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 3,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p3_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 3.4 Diet Diversity including Integration of Fortified Rice and Millets ............................. 18 3.5 Hot Cooked Meals ............................................................................................... 19 3.6 Take Home Ration (not raw ration) ....................................................................... 19 3.7 Periodicity of distribution of THR .......................................................................... 20 3.8 Development of Community Food Habits ............................................................. 20 3.9 Procurement of Supplementary Nutrition .............................................................. 20 3.10 Quality Testing ..................................................................................................... 21 3.11 Role of Panchayats .............................................................................................. 22 3.11.1 Outline of activities centered on Poshan Pa"
+      ]
+    },
+    {
+      "input": "Which section of the guidelines discusses the roadmap for the next five years?",
+      "expected_output": "Section 3.18 Road-Map for 5 years.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 3,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p3_c1",
+      "retrieval_context": [
+        "s .............................................................................................. 22 3.11.1 Outline of activities centered on Poshan Panchayats 22 3.12 PoshanVatikas ..................................................................................................... 24 3.13 Leveraging Traditional Knowledge........................................................................ 25 3.14 Governance ......................................................................................................... 26 3.15 Early Childhood Care and Education (ECCE) ....................................................... 26 3.16 Construction of AWCs .......................................................................................... 27 3.17 Saksham Anganwadis .......................................................................................... 28 3.18 Road-Map for 5 years .......................................................................................... 28 4. POSHAN AB"
+      ]
+    },
+    {
+      "input": "What is the heading of the section that focuses on leveraging traditional knowledge?",
+      "expected_output": "Section 3.13 Leveraging Traditional Knowledge.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 3,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p3_c1",
+      "retrieval_context": [
+        "s .............................................................................................. 22 3.11.1 Outline of activities centered on Poshan Panchayats 22 3.12 PoshanVatikas ..................................................................................................... 24 3.13 Leveraging Traditional Knowledge........................................................................ 25 3.14 Governance ......................................................................................................... 26 3.15 Early Childhood Care and Education (ECCE) ....................................................... 26 3.16 Construction of AWCs .......................................................................................... 27 3.17 Saksham Anganwadis .......................................................................................... 28 3.18 Road-Map for 5 years .......................................................................................... 28 4. POSHAN AB"
+      ]
+    },
+    {
+      "input": "Which sections are listed under the POSHAN ABHIYAAN heading?",
+      "expected_output": "The POSHAN ABHIYAAN heading includes the following sections: Community Mobilization & Behavioural Change, Community Based Events (CBEs), Jan Andolan, Incentives and Awards, and Technology – Procurement of remaining Smartphones and GMDs.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 3,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p3_c2",
+      "retrieval_context": [
+        ".............. 28 3.18 Road-Map for 5 years .......................................................................................... 28 4. POSHAN ABHIYAAN ...................................................................... 29 4.1 Community Mobilization &Behavioural Change .................................................... 29 4.2 Community Based Events (CBEs) ........................................................................ 30 4.3 Jan Andolan ......................................................................................................... 30 4.4 Incentives and Awards ......................................................................................... 31 4.4.1 Incentives: ........................................................................... 31 4.4.2 Awards: ................................................................................ 31 4.5 Technology – Procurement of remaining Smartphones and GMDs ....................... 31"
+      ]
+    },
+    {
+      "input": "On which page does the 'Road-Map for 5 years' appear?",
+      "expected_output": "The 'Road-Map for 5 years' appears on page 28.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 3,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p3_c2",
+      "retrieval_context": [
+        ".............. 28 3.18 Road-Map for 5 years .......................................................................................... 28 4. POSHAN ABHIYAAN ...................................................................... 29 4.1 Community Mobilization &Behavioural Change .................................................... 29 4.2 Community Based Events (CBEs) ........................................................................ 30 4.3 Jan Andolan ......................................................................................................... 30 4.4 Incentives and Awards ......................................................................................... 31 4.4.1 Incentives: ........................................................................... 31 4.4.2 Awards: ................................................................................ 31 4.5 Technology – Procurement of remaining Smartphones and GMDs ....................... 31"
+      ]
+    },
+    {
+      "input": "What is the title of section 4.5 in the Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines?",
+      "expected_output": "Technology – Procurement of remaining Smartphones and GMDs",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 3,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p3_c3",
+      "retrieval_context": [
+        "............................. 31 4.5 Technology – Procurement of remaining Smartphones and GMDs ....................... 31"
+      ]
+    },
+    {
+      "input": "On which page does the section titled \"Technology – Procurement of remaining Smartphones and GMDs\" appear?",
+      "expected_output": "Page 31",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 3,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p3_c3",
+      "retrieval_context": [
+        "............................. 31 4.5 Technology – Procurement of remaining Smartphones and GMDs ....................... 31"
+      ]
+    },
+    {
+      "input": "Which section of the guidelines outlines the nutritional benefits for adolescent girls?",
+      "expected_output": "Section 5.4 Nutritional Benefits under the Scheme.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 4,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p4_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 4.6 Best Practices ...................................................................................................... 32 4.7 Convergence with Ministries/Departments/Organizations ..................................... 33 5. SCHEME FOR ADOLESCENT GIRLS ............................................ 34 5.1 Objective of the Scheme ...................................................................................... 34 5.2 Coverage of the Scheme ...................................................................................... 34 5.3 Eligibility............................................................................................................... 34 5.4 Nutritional Benefits under the Scheme.................................................................. 35 5.5 Convergence under Non-Nutrition Component ..................................................... 35 6. TRAINING OF ANGANWADI FUNCTIONARIES ............................ 38 APPENDIX: Cost"
+      ]
+    },
+    {
+      "input": "On which page does the 'Training of Anganwadi Functionaries' section begin?",
+      "expected_output": "Page 38.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 4,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p4_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 4.6 Best Practices ...................................................................................................... 32 4.7 Convergence with Ministries/Departments/Organizations ..................................... 33 5. SCHEME FOR ADOLESCENT GIRLS ............................................ 34 5.1 Objective of the Scheme ...................................................................................... 34 5.2 Coverage of the Scheme ...................................................................................... 34 5.3 Eligibility............................................................................................................... 34 5.4 Nutritional Benefits under the Scheme.................................................................. 35 5.5 Convergence under Non-Nutrition Component ..................................................... 35 6. TRAINING OF ANGANWADI FUNCTIONARIES ............................ 38 APPENDIX: Cost"
+      ]
+    },
+    {
+      "input": "What are the three levels of manpower organization mentioned in the scheme guidelines?",
+      "expected_output": "The scheme outlines manpower organization at the State level (SPMU), District level (DPMU), and Block level (BPMU).",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 4,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p4_c1",
+      "retrieval_context": [
+        "mponent ..................................................... 35 6. TRAINING OF ANGANWADI FUNCTIONARIES ............................ 38 APPENDIX: Cost Components ................................................................. 39 ANNEXURE I: ROADMAP FOR 5 YEARS ................................................. 44 ANNEXURE II: ............................................................................................ 45 COMPONENTS OF POSHAN ABHIYAAN ................................................. 45 The manpower details and organization at State (SPMU), District (DPMU) and Block (BPMU) levels ................................................................................................................... 54 Remunerations to Manpower Hired on Contractual Basis at State/UT Level ....................... 57 Details of Contractual Posts at District Level Help Desk ..................................................... 57 Details of Contractual Posts at Block Level Help Desk ............"
+      ]
+    },
+    {
+      "input": "Which annexure provides the five‑year roadmap for the scheme?",
+      "expected_output": "Annexure I contains the roadmap for five years.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 4,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p4_c1",
+      "retrieval_context": [
+        "mponent ..................................................... 35 6. TRAINING OF ANGANWADI FUNCTIONARIES ............................ 38 APPENDIX: Cost Components ................................................................. 39 ANNEXURE I: ROADMAP FOR 5 YEARS ................................................. 44 ANNEXURE II: ............................................................................................ 45 COMPONENTS OF POSHAN ABHIYAAN ................................................. 45 The manpower details and organization at State (SPMU), District (DPMU) and Block (BPMU) levels ................................................................................................................... 54 Remunerations to Manpower Hired on Contractual Basis at State/UT Level ....................... 57 Details of Contractual Posts at District Level Help Desk ..................................................... 57 Details of Contractual Posts at Block Level Help Desk ............"
+      ]
+    },
+    {
+      "input": "On which page is the 'District Level Help Desk' mentioned in the guidelines?",
+      "expected_output": "The 'District Level Help Desk' is mentioned on page 57.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 4,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p4_c2",
+      "retrieval_context": [
+        "t District Level Help Desk ..................................................... 57 Details of Contractual Posts at Block Level Help Desk ....................................................... 58 Costing Norms for SPMU Office ......................................................................................... 58 ANNEXURE III: CONVERGENCE .............................................................. 59 ANNEXURE IV: TRAINING ......................................................................... 69 ANNEXURE V: STREAMLINED GUIDELINES .......................................... 73"
+      ]
+    },
+    {
+      "input": "Which annexure deals with training and what page does it begin on?",
+      "expected_output": "Annexure IV: TRAINING deals with training and it begins on page 69.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 4,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p4_c2",
+      "retrieval_context": [
+        "t District Level Help Desk ..................................................... 57 Details of Contractual Posts at Block Level Help Desk ....................................................... 58 Costing Norms for SPMU Office ......................................................................................... 58 ANNEXURE III: CONVERGENCE .............................................................. 59 ANNEXURE IV: TRAINING ......................................................................... 69 ANNEXURE V: STREAMLINED GUIDELINES .......................................... 73"
+      ]
+    },
+    {
+      "input": "What does AFHC stand for in the Saksham Anganwadi and Poshan 2.0 scheme?",
+      "expected_output": "Adolescent Friendly Health Clinics",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 5,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p5_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 1 1. AFHC - Adolescent Friendly Health Clinics 2. ANM - Anganwadi Nurse Midwife 3. ASHA - Accredited Social Health Activist 4. AWWs - Anganwadi Workers 5. AWHs - Anganwadi Helpers 6. AYUSH - Ayurveda Unani Siddha Homeopathy 7. BDO - Block Development Officer 8. CBE - Community Based Events 9. CDPO - Child Development Project Officer 10. CGWB - Central Ground Water Board 11. CPMU - Central Project Management Unit 12. DD - Dietary Diversity 13. DM - District Magistrate 14. DPO - District Programme Officer 15. FSSAI - Food Safety and Standards Authority of India 16. GEM - Government e Marketplace 17. GMDs - Growth Monitoring Devices 18. HCM - Hot Cooked Meals 19. IFA - Iron and Folic Acid 20. KSY - Kishori Shakti Yojana 21. MAM - Moderately Acute Malnourished ABBREVIATIONS"
+      ]
+    },
+    {
+      "input": "What is the role of CDPO as per the scheme abbreviations?",
+      "expected_output": "Child Development Project Officer",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 5,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p5_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 1 1. AFHC - Adolescent Friendly Health Clinics 2. ANM - Anganwadi Nurse Midwife 3. ASHA - Accredited Social Health Activist 4. AWWs - Anganwadi Workers 5. AWHs - Anganwadi Helpers 6. AYUSH - Ayurveda Unani Siddha Homeopathy 7. BDO - Block Development Officer 8. CBE - Community Based Events 9. CDPO - Child Development Project Officer 10. CGWB - Central Ground Water Board 11. CPMU - Central Project Management Unit 12. DD - Dietary Diversity 13. DM - District Magistrate 14. DPO - District Programme Officer 15. FSSAI - Food Safety and Standards Authority of India 16. GEM - Government e Marketplace 17. GMDs - Growth Monitoring Devices 18. HCM - Hot Cooked Meals 19. IFA - Iron and Folic Acid 20. KSY - Kishori Shakti Yojana 21. MAM - Moderately Acute Malnourished ABBREVIATIONS"
+      ]
+    },
+    {
+      "input": "What does the abbreviation 'NHM' stand for?",
+      "expected_output": "National Health Mission",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 6,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p6_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 2 22. MO - Medical Officers 23. MSDP - Multi-sectoral Development Programme 24. NeGD - National e-Governance Division 25. NFHS - National Family Health Survey 26. NFSA - National Food Security Act 27. NHE - Nutrition & Health Education 28. NHM - National Health Mission 29. NREGA - National Rural Employment Guarantee 30. POL - Petrol, Oil and Lubricant 31. PPI - Pulse Polio Immunization 32. PRI - Panchayati Raj Institution 33. PW&LM - Pregnant Women and Lactating mothers 34. RCH - Reproductive and Child Health 35. RDA - Recommended Dietary Allowance 36. SAM - Severely Acute Malnourished 37. SDM - Sub Divisional Magistrate 38. SHG - Self Help Group 39. SPMU - State project Management Unit4 40. SSDMs - State Skill Development Missions 41. THR - Take Home Ration 42. VHSNC - Village Health Sanitation and Nutrition Committee"
+      ]
+    },
+    {
+      "input": "In the Saksham Anganwadi and Poshan 2.0 guidelines, what does 'THR' mean?",
+      "expected_output": "Take Home Ration",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 6,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p6_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 2 22. MO - Medical Officers 23. MSDP - Multi-sectoral Development Programme 24. NeGD - National e-Governance Division 25. NFHS - National Family Health Survey 26. NFSA - National Food Security Act 27. NHE - Nutrition & Health Education 28. NHM - National Health Mission 29. NREGA - National Rural Employment Guarantee 30. POL - Petrol, Oil and Lubricant 31. PPI - Pulse Polio Immunization 32. PRI - Panchayati Raj Institution 33. PW&LM - Pregnant Women and Lactating mothers 34. RCH - Reproductive and Child Health 35. RDA - Recommended Dietary Allowance 36. SAM - Severely Acute Malnourished 37. SDM - Sub Divisional Magistrate 38. SHG - Self Help Group 39. SPMU - State project Management Unit4 40. SSDMs - State Skill Development Missions 41. THR - Take Home Ration 42. VHSNC - Village Health Sanitation and Nutrition Committee"
+      ]
+    },
+    {
+      "input": "Which committee is referenced on page 6 of the Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines?",
+      "expected_output": "The text references the \"ion Committee\".",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 6,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p6_c1",
+      "retrieval_context": [
+        "ion Committee"
+      ]
+    },
+    {
+      "input": "Who are the target beneficiaries of the Poshan 2.0 programme?",
+      "expected_output": "Poshan 2.0 aims to address malnutrition in children, adolescent girls, pregnant women and lactating mothers.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 7,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p7_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 3 Saksham Anganwadi and Poshan 2.0 (hereinafter referred to as Poshan 2.0) is an Integrated Nutrition Support Programme. It seeks to address the challenges of malnutrition in children, adolescent girls, pregnant women and lactating mothers through a strategic shift in nutrition content and delivery and by creation of a convergent eco- system to develop and promote practices that nurture health, wellness and immunity. Poshan 2.0 shall focus on Maternal Nutrition, Infant and Young Child Feeding Norms, Treatment of MAM/SAM and Wellness through AYUSH. It will rest on the pillars of Convergence, Governance, and Capacity-building. Poshan Abhiyan will be the pillar for Outreach and will cover innovations related to nutritional support, ICT interventions, Media Advocacy and Research, Community Outreach and Jan Andolan. Adequate health care, nutrition, security, safety, responsive care giving and opportunities for early learning are essential for children to ach"
+      ]
+    },
+    {
+      "input": "What are the three main pillars on which Poshan 2.0 rests?",
+      "expected_output": "Poshan 2.0 rests on the pillars of Convergence, Governance, and Capacity-building.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 7,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p7_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 3 Saksham Anganwadi and Poshan 2.0 (hereinafter referred to as Poshan 2.0) is an Integrated Nutrition Support Programme. It seeks to address the challenges of malnutrition in children, adolescent girls, pregnant women and lactating mothers through a strategic shift in nutrition content and delivery and by creation of a convergent eco- system to develop and promote practices that nurture health, wellness and immunity. Poshan 2.0 shall focus on Maternal Nutrition, Infant and Young Child Feeding Norms, Treatment of MAM/SAM and Wellness through AYUSH. It will rest on the pillars of Convergence, Governance, and Capacity-building. Poshan Abhiyan will be the pillar for Outreach and will cover innovations related to nutritional support, ICT interventions, Media Advocacy and Research, Community Outreach and Jan Andolan. Adequate health care, nutrition, security, safety, responsive care giving and opportunities for early learning are essential for children to ach"
+      ]
+    },
+    {
+      "input": "Which age group of children is the Mission Saksham Anganwadi and Poshan 2.0 scheme aimed at?",
+      "expected_output": "The scheme is designed for children under six years of age, including the 5‑6 year‑old group for seamless integration into Grade I.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 7,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p7_c1",
+      "retrieval_context": [
+        "olan. Adequate health care, nutrition, security, safety, responsive care giving and opportunities for early learning are essential for children to achieve their full human potential. Therefore, Early Childhood Care and Education is an integral component of the programme. Recognizing that early childhood care constitutes the foundation of human development, the Scheme is designed to promote holistic development of children under six years of age through improved ECCE content and delivery of cognitive, emotional, social and intellectual development of the child to make all pre-schooler’s school ready and for seamless integration of children in the age group of 5-6 in Grade I under the National Education Policy, 2020. The programme is specifically designed to reach disadvantaged and low-income groups, for effective disparity reduction. The current Anganwadi Services Scheme is one of the largest and unique programmes of the Govt. of India for early childhood care and development. It is a f"
+      ]
+    },
+    {
+      "input": "What is the main objective of the scheme regarding preschool children’s education?",
+      "expected_output": "The objective is to promote holistic development of pre‑schoolers and make them school‑ready, ensuring their seamless integration into Grade I under the National Education Policy, 2020.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 7,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p7_c1",
+      "retrieval_context": [
+        "olan. Adequate health care, nutrition, security, safety, responsive care giving and opportunities for early learning are essential for children to achieve their full human potential. Therefore, Early Childhood Care and Education is an integral component of the programme. Recognizing that early childhood care constitutes the foundation of human development, the Scheme is designed to promote holistic development of children under six years of age through improved ECCE content and delivery of cognitive, emotional, social and intellectual development of the child to make all pre-schooler’s school ready and for seamless integration of children in the age group of 5-6 in Grade I under the National Education Policy, 2020. The programme is specifically designed to reach disadvantaged and low-income groups, for effective disparity reduction. The current Anganwadi Services Scheme is one of the largest and unique programmes of the Govt. of India for early childhood care and development. It is a f"
+      ]
+    },
+    {
+      "input": "Who are the beneficiaries covered under the Anganwadi Services Scheme?",
+      "expected_output": "The scheme benefits children in the age group of 0‑6 years, pregnant women, lactating mothers, and adolescent girls in the age group of 14‑18 years.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 7,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p7_c2",
+      "retrieval_context": [
+        "urrent Anganwadi Services Scheme is one of the largest and unique programmes of the Govt. of India for early childhood care and development. It is a firm testament of the country’s commitment to its children and nursing mothers to respond to the challenge of providing pre-school non-formal education on one hand and break the vicious cycle of malnutrition, morbidity, reduced learning capacity and mortality on the other. The beneficiaries under this scheme are children in the age group of 0-6 years, pregnant women and lactating mothers and adolescent girls in the age group 14-18 years. The rationale for Mission Poshan 2.0 arises from the challenges plaguing the extant supplementary nutrition programme. Nutrition policies have remained consistent over the years and have been slow to transition towards a more integrated approach to nutrition security. Past interventions in terms of both nutrition quality and delivery have been inadequate. The Anganwadi Services under ICDS have focused on e"
+      ]
+    },
+    {
+      "input": "What are the two primary goals of the Anganwadi Services Scheme mentioned in the guidelines?",
+      "expected_output": "The scheme aims to provide pre‑school non‑formal education and to break the vicious cycle of malnutrition, morbidity, reduced learning capacity, and mortality.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 7,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p7_c2",
+      "retrieval_context": [
+        "urrent Anganwadi Services Scheme is one of the largest and unique programmes of the Govt. of India for early childhood care and development. It is a firm testament of the country’s commitment to its children and nursing mothers to respond to the challenge of providing pre-school non-formal education on one hand and break the vicious cycle of malnutrition, morbidity, reduced learning capacity and mortality on the other. The beneficiaries under this scheme are children in the age group of 0-6 years, pregnant women and lactating mothers and adolescent girls in the age group 14-18 years. The rationale for Mission Poshan 2.0 arises from the challenges plaguing the extant supplementary nutrition programme. Nutrition policies have remained consistent over the years and have been slow to transition towards a more integrated approach to nutrition security. Past interventions in terms of both nutrition quality and delivery have been inadequate. The Anganwadi Services under ICDS have focused on e"
+      ]
+    },
+    {
+      "input": "What have past interventions in nutrition been inadequate in, according to the guidelines?",
+      "expected_output": "Past interventions have been inadequate in both nutrition quality and delivery.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 7,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p7_c3",
+      "retrieval_context": [
+        "security. Past interventions in terms of both nutrition quality and delivery have been inadequate. The Anganwadi Services under ICDS have focused on ensuring calorie sufficiency, neglecting quality and diversity of diets and behavioural change towards"
+      ]
+    },
+    {
+      "input": "What have the Anganwadi Services under ICDS primarily focused on, and what have they neglected?",
+      "expected_output": "The Anganwadi Services under ICDS have focused on ensuring calorie sufficiency, neglecting quality and diversity of diets and behavioural change.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 7,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p7_c3",
+      "retrieval_context": [
+        "security. Past interventions in terms of both nutrition quality and delivery have been inadequate. The Anganwadi Services under ICDS have focused on ensuring calorie sufficiency, neglecting quality and diversity of diets and behavioural change towards"
+      ]
+    },
+    {
+      "input": "What were the main shortcomings of the current Anganwadi nutrition program as described in the guidelines?",
+      "expected_output": "The current program was largely driven by calorie intake rather than balanced diets, lacked micro‑nutrients in Take‑Home Ration (THR) and Hot Cooked Meals (HCM), did not leverage traditional nutritional wisdom, suffered from weak community ownership and participation of beneficiaries and local stakeholders, and faced poor implementation with an absence of last‑mile tracking.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 8,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p8_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 4 better nutrition. Focus of the current program has largely been driven by calorie intake rather than on balanced diets with absence of micro-nutrients in Take-Home Ration (THR) and Hot Cooked Meals (HCM). Traditional wisdom in nutritional practices have not been leveraged. Scheme execution and implementation have been affected by absence of effective participation of beneficiaries and local stakeholders pointing to weak community ownership or stake in local Anganwadi activities. A critical challenge faced is poor implementation with absence of last-mile tracking. Poshan 2.0 is designed to address the above challenges through transparency, accountability, balanced diets, diet diversity and quality, greater grassroots involvement and last-mile delivery of services supported by key strategies, viz., corrective strategies to address nutrition related deficiencies, nutrition awareness strategies to develop good eating habits for sustainable health and well"
+      ]
+    },
+    {
+      "input": "What key strategies does Poshan 2.0 introduce to address the challenges of the existing scheme?",
+      "expected_output": "Poshan 2.0 aims to improve nutrition through transparency, accountability, balanced diets, diet diversity and quality, greater grassroots involvement, last‑mile delivery of services, corrective strategies to address nutrition‑related deficiencies, and nutrition awareness strategies to develop good eating habits for sustainable health.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 8,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p8_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 4 better nutrition. Focus of the current program has largely been driven by calorie intake rather than on balanced diets with absence of micro-nutrients in Take-Home Ration (THR) and Hot Cooked Meals (HCM). Traditional wisdom in nutritional practices have not been leveraged. Scheme execution and implementation have been affected by absence of effective participation of beneficiaries and local stakeholders pointing to weak community ownership or stake in local Anganwadi activities. A critical challenge faced is poor implementation with absence of last-mile tracking. Poshan 2.0 is designed to address the above challenges through transparency, accountability, balanced diets, diet diversity and quality, greater grassroots involvement and last-mile delivery of services supported by key strategies, viz., corrective strategies to address nutrition related deficiencies, nutrition awareness strategies to develop good eating habits for sustainable health and well"
+      ]
+    },
+    {
+      "input": "Which population groups are targeted by the Poshan 2.0 mission?",
+      "expected_output": "Poshan 2.0 targets children up to the age of 6 years, adolescent girls aged 14-18 years, and pregnant and lactating women.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 8,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p8_c1",
+      "retrieval_context": [
+        "ive strategies to address nutrition related deficiencies, nutrition awareness strategies to develop good eating habits for sustainable health and well-being, strategies for communication and development of green eco-systems such as Poshan Vatikas. 1.1 Vision Poshan 2.0 seeks to address the challenging situation of malnutrition among children up to the age of 6 years, adolescent girls (14-18 years) and pregnant and lactating women. Poshan 2.0 is crucial for India’s development as women and children comprise over two- thirds of India’s population. The achievement of the Sustainable Development Goals lies at the fore-front of this programme design. Poshan 2.0 shall contribute to the SDGs, specifically, SDG 2 on Zero Hunger and SDG 4 on Quality Education. The Mission will focus on the fundamental importance of nutrition and early childhood care and education for the well-being, growth and development of children into healthy and productive adults. 1.2 Objectives To prepare a comprehensive"
+      ]
+    },
+    {
+      "input": "Which Sustainable Development Goals does Poshan 2.0 aim to support?",
+      "expected_output": "Poshan 2.0 aims to contribute to SDG 2 on Zero Hunger and SDG 4 on Quality Education.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 8,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p8_c1",
+      "retrieval_context": [
+        "ive strategies to address nutrition related deficiencies, nutrition awareness strategies to develop good eating habits for sustainable health and well-being, strategies for communication and development of green eco-systems such as Poshan Vatikas. 1.1 Vision Poshan 2.0 seeks to address the challenging situation of malnutrition among children up to the age of 6 years, adolescent girls (14-18 years) and pregnant and lactating women. Poshan 2.0 is crucial for India’s development as women and children comprise over two- thirds of India’s population. The achievement of the Sustainable Development Goals lies at the fore-front of this programme design. Poshan 2.0 shall contribute to the SDGs, specifically, SDG 2 on Zero Hunger and SDG 4 on Quality Education. The Mission will focus on the fundamental importance of nutrition and early childhood care and education for the well-being, growth and development of children into healthy and productive adults. 1.2 Objectives To prepare a comprehensive"
+      ]
+    },
+    {
+      "input": "What are the main objectives of the Poshan 2.0 scheme?",
+      "expected_output": "The objectives of Poshan 2.0 are to contribute to human capital development of the country, address challenges of malnutrition, promote nutrition awareness and good eating habits for sustainable health and wellbeing, and address nutrition‑related deficiencies through key strategies.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 8,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p8_c2",
+      "retrieval_context": [
+        "re and education for the well-being, growth and development of children into healthy and productive adults. 1.2 Objectives To prepare a comprehensive strategy to address the challenge of malnutrition, the Supplementary Nutrition Programme under Anganwadi Services, Scheme for Adolescent Girls and Poshan Abhiyaan have been aligned under Poshan 2.0 as an Integrated Nutrition Support Programme. The objectives of Poshan 2.0 are as follows:  To contribute to human capital development of the country;  Address challenges of malnutrition;  Promote nutrition awareness and good eating habits for sustainable health and wellbeing; and  Address nutrition related deficiencies through key strategies."
+      ]
+    },
+    {
+      "input": "Which existing programmes have been aligned under Poshan 2.0 as an Integrated Nutrition Support Programme?",
+      "expected_output": "The Supplementary Nutrition Programme under Anganwadi Services, the Scheme for Adolescent Girls, and Poshan Abhiyaan have been aligned under Poshan 2.0.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 8,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p8_c2",
+      "retrieval_context": [
+        "re and education for the well-being, growth and development of children into healthy and productive adults. 1.2 Objectives To prepare a comprehensive strategy to address the challenge of malnutrition, the Supplementary Nutrition Programme under Anganwadi Services, Scheme for Adolescent Girls and Poshan Abhiyaan have been aligned under Poshan 2.0 as an Integrated Nutrition Support Programme. The objectives of Poshan 2.0 are as follows:  To contribute to human capital development of the country;  Address challenges of malnutrition;  Promote nutrition awareness and good eating habits for sustainable health and wellbeing; and  Address nutrition related deficiencies through key strategies."
+      ]
+    },
+    {
+      "input": "What are the main focus areas of Poshan 2.0 as mentioned in the guidelines?",
+      "expected_output": "Poshan 2.0 focuses on maternal nutrition, infant and young child feeding norms, treatment protocols for SAM/MAM, and wellness through AYUSH practices, with the aim of reducing wasting, under‑weight prevalence, stunting and anemia.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 9,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p9_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 5 Poshan 2.0 shall focus on Maternal Nutrition, Infant and Young Child Feeding Norms, Treatment Protocols for SAM/MAM and Wellness through AYUSH practices to reduce wasting and under-weight prevalence besides stunting and anemia, supported by the ‘Poshan Tracker’, a new, robust ICT centralised data system which is being linked with the RCH Portal (Anmol) of MoHFW. Poshan 2.0 shall seek to optimize the quality and delivery of nutrition under the Supplementary Nutrition Program. 1.3 Important components of Saksham Anganwadi and Poshan 2.0 With a view to address various gaps and shortcomings in the on-going nutrition programme and to improve implementation as well as to accelerate improvement in nutrition and child development outcomes, the existing scheme components have been re-organized under Poshan 2.0 into the primary verticals given below:  Nutrition Support for POSHAN through Supplementary Nutrition Programme (SNP) for children of the age group of"
+      ]
+    },
+    {
+      "input": "Which ICT system supports Poshan 2.0 and with which portal is it linked?",
+      "expected_output": "Poshan 2.0 is supported by the ‘Poshan Tracker’, a robust centralized data system that is linked with the RCH Portal (Anmol) of the Ministry of Health and Family Welfare.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 9,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p9_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 5 Poshan 2.0 shall focus on Maternal Nutrition, Infant and Young Child Feeding Norms, Treatment Protocols for SAM/MAM and Wellness through AYUSH practices to reduce wasting and under-weight prevalence besides stunting and anemia, supported by the ‘Poshan Tracker’, a new, robust ICT centralised data system which is being linked with the RCH Portal (Anmol) of MoHFW. Poshan 2.0 shall seek to optimize the quality and delivery of nutrition under the Supplementary Nutrition Program. 1.3 Important components of Saksham Anganwadi and Poshan 2.0 With a view to address various gaps and shortcomings in the on-going nutrition programme and to improve implementation as well as to accelerate improvement in nutrition and child development outcomes, the existing scheme components have been re-organized under Poshan 2.0 into the primary verticals given below:  Nutrition Support for POSHAN through Supplementary Nutrition Programme (SNP) for children of the age group of"
+      ]
+    },
+    {
+      "input": "What are the primary verticals covered by the Mission Saksham Anganwadi and Poshan 2.0 scheme?",
+      "expected_output": "The primary verticals are: 1) Nutrition Support for POSHAN through the Supplementary Nutrition Programme (SNP) for children aged 06 months to 6 years, pregnant women and lactating mothers (PWLM), and for adolescent girls aged 14 to 18 years in Aspirational Districts and the North Eastern Region (NER); 2) Early Childhood Care and Education for children aged 3‑6 years and early stimulation for children aged 0‑3 years; 3) Anganwadi Infrastructure, including modern, upgraded Saksham Anganwadi; and 4) Poshan Abhiyaan.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 9,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p9_c1",
+      "retrieval_context": [
+        "to the primary verticals given below:  Nutrition Support for POSHAN through Supplementary Nutrition Programme (SNP) for children of the age group of 06 months to 6 years, pregnant women and lactating mothers (PWLM); and for Adolescent Girls in the age group of 14 to 18 years in Aspirational Districts and North Eastern Region (NER);  Early Childhood Care and Education [3-6 years]and early stimulation for (0-3 years);  Anganwadi Infrastructure including modern, upgraded Saksham Anganwadi; and  Poshan Abhiyaan These guidelines are being issued under the provisions of Sections 4(a), 5(1) (a), 6 & 7 of National Food Security Act, 2013 and shall come into force with immediate effect. The Streamlined Guidelines issued on 13.01.2021 (hereinafter called ‘Streamlined Guidelines’) which are annexed as Annexure V shall be an integral part of these guidelines. These scheme guidelines have been developed to support stakeholders who shall be involved in implementing the Scheme, as well as State,"
+      ]
+    },
+    {
+      "input": "Under which sections of the National Food Security Act, 2013 are these guidelines issued?",
+      "expected_output": "These guidelines are issued under the provisions of Sections 4(a), 5(1)(a), 6 and 7 of the National Food Security Act, 2013.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 9,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p9_c1",
+      "retrieval_context": [
+        "to the primary verticals given below:  Nutrition Support for POSHAN through Supplementary Nutrition Programme (SNP) for children of the age group of 06 months to 6 years, pregnant women and lactating mothers (PWLM); and for Adolescent Girls in the age group of 14 to 18 years in Aspirational Districts and North Eastern Region (NER);  Early Childhood Care and Education [3-6 years]and early stimulation for (0-3 years);  Anganwadi Infrastructure including modern, upgraded Saksham Anganwadi; and  Poshan Abhiyaan These guidelines are being issued under the provisions of Sections 4(a), 5(1) (a), 6 & 7 of National Food Security Act, 2013 and shall come into force with immediate effect. The Streamlined Guidelines issued on 13.01.2021 (hereinafter called ‘Streamlined Guidelines’) which are annexed as Annexure V shall be an integral part of these guidelines. These scheme guidelines have been developed to support stakeholders who shall be involved in implementing the Scheme, as well as State,"
+      ]
+    },
+    {
+      "input": "Who are the intended users of the Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines?",
+      "expected_output": "The guidelines are intended for stakeholders involved in implementing the scheme, including State, district and grassroots level functionaries, as well as officials at the National, State/Union Territory (UT) and District/grassroot levels.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 9,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p9_c2",
+      "retrieval_context": [
+        "e guidelines. These scheme guidelines have been developed to support stakeholders who shall be involved in implementing the Scheme, as well as State, district and grassroots level functionaries. It is intended to serve as a reference manual for officials at the National, State/Union Territory (UT and District/grass root levels) for policy guidance and monitoring. These guidelines list out the services to be provided under the Scheme and processes for implementation and highlight the roles and responsibilities of various line departments as part of convergence."
+      ]
+    },
+    {
+      "input": "What is the main purpose of the scheme guidelines?",
+      "expected_output": "The guidelines serve as a reference manual for policy guidance and monitoring, list the services to be provided under the scheme, describe the implementation processes, and highlight the roles and responsibilities of various line departments as part of convergence.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 9,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p9_c2",
+      "retrieval_context": [
+        "e guidelines. These scheme guidelines have been developed to support stakeholders who shall be involved in implementing the Scheme, as well as State, district and grassroots level functionaries. It is intended to serve as a reference manual for officials at the National, State/Union Territory (UT and District/grass root levels) for policy guidance and monitoring. These guidelines list out the services to be provided under the Scheme and processes for implementation and highlight the roles and responsibilities of various line departments as part of convergence."
+      ]
+    },
+    {
+      "input": "Can the guidelines for Saksham Anganwadi and Poshan 2.0 be changed?",
+      "expected_output": "Yes. The guidelines may be modified based on feedback received from States/UTs from time to time, as per requirements, to ensure proper implementation and outcomes envisaged under the programme.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 10,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p10_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 6 These guidelines may be modified based on the feedback received from States/UTs from time to time, as per requirements, to ensure proper implementation and outcomes envisaged under the programme. ***"
+      ]
+    },
+    {
+      "input": "What can lead to modifications of the Saksham Anganwadi and Poshan 2.0 guidelines?",
+      "expected_output": "Modifications may be made based on the feedback received from States/UTs, as per requirements, to ensure proper implementation and the intended outcomes of the programme.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 10,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p10_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 6 These guidelines may be modified based on the feedback received from States/UTs from time to time, as per requirements, to ensure proper implementation and outcomes envisaged under the programme. ***"
+      ]
+    },
+    {
+      "input": "Since which financial year has the Government of India required the development of Annual Programme Implementation Plans (APIPs) for Anganwadi Services?",
+      "expected_output": "The Government of India has required the development of Annual Programme Implementation Plans (APIPs) for Anganwadi Services since the 2011-12 financial year.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 11,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p11_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 7 2.1 Framework at Central Level Central Empowered Programme Committee under Anganwadi Services: The Government of India has introduced development of Annual Programme Implementation Plans (APIPs) in Anganwadi Services since 2011-12 in a prescribed format. The APIP mode of programme implementation in the Anganwadi Services Scheme is one of the key aspects of the strengthened and restructured Anganwadi Services Scheme whose administrative approval was issued to the States on 22nd October, 2012. The States/UTs were also informed that from 2013-14, submission of the APIP by the States/UTs in the prescribed format will be mandatory and the second as well as any subsequent instalments of funds from GOI will be released to the States/UTs only after approval of the APIP. The Empowered Programme Committee (EPC) is the highest technical body for planning, supervising and monitoring the effective implementation of Anganwadi Services Scheme. The Composition of the"
+      ]
+    },
+    {
+      "input": "From which year onward did states and UTs have to submit the APIP in the prescribed format for receiving subsequent fund instalments?",
+      "expected_output": "From the 2013-14 financial year, states and UTs were required to submit the APIP in the prescribed format, and the second as well as any subsequent instalments of funds from the Government of India would be released only after approval of the APIP.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 11,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p11_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 7 2.1 Framework at Central Level Central Empowered Programme Committee under Anganwadi Services: The Government of India has introduced development of Annual Programme Implementation Plans (APIPs) in Anganwadi Services since 2011-12 in a prescribed format. The APIP mode of programme implementation in the Anganwadi Services Scheme is one of the key aspects of the strengthened and restructured Anganwadi Services Scheme whose administrative approval was issued to the States on 22nd October, 2012. The States/UTs were also informed that from 2013-14, submission of the APIP by the States/UTs in the prescribed format will be mandatory and the second as well as any subsequent instalments of funds from GOI will be released to the States/UTs only after approval of the APIP. The Empowered Programme Committee (EPC) is the highest technical body for planning, supervising and monitoring the effective implementation of Anganwadi Services Scheme. The Composition of the"
+      ]
+    },
+    {
+      "input": "Who chairs the highest technical body for planning, supervising and monitoring the effective implementation of the Anganwadi Services Scheme?",
+      "expected_output": "The Secretary of the Ministry of Water Resources, River Development and Ganga Rejuvenation (WCD) serves as the Chairperson.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 11,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p11_c1",
+      "retrieval_context": [
+        "the highest technical body for planning, supervising and monitoring the effective implementation of Anganwadi Services Scheme. The Composition of the EPC is as under: (1) Secretary, Ministry of WCD - Chairperson (2) Senior Advisor, NITI Aayog - Member (3) Joint Secretary, Department of Expenditure - Member Ministry of Finance (4) AS& FA, Ministry of WCD - Member (5) Representative of M/o Rural Development - Member (6) Representative* of Ministry of Drinking Water Supply and Sanitation - Member (7) Representative* of M/o H&FW - Member"
+      ]
+    },
+    {
+      "input": "Which members are part of the EPC according to the scheme guidelines?",
+      "expected_output": "The EPC includes: (1) Secretary, Ministry of WCD – Chairperson, (2) Senior Advisor, NITI Aayog – Member, (3) Joint Secretary, Department of Expenditure, Ministry of Finance – Member, (4) AS&FA, Ministry of WCD – Member, (5) Representative of Ministry of Rural Development – Member, (6) Representative of Ministry of Drinking Water Supply and Sanitation – Member, (7) Representative of Ministry of Health & Family Welfare – Member.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 11,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p11_c1",
+      "retrieval_context": [
+        "the highest technical body for planning, supervising and monitoring the effective implementation of Anganwadi Services Scheme. The Composition of the EPC is as under: (1) Secretary, Ministry of WCD - Chairperson (2) Senior Advisor, NITI Aayog - Member (3) Joint Secretary, Department of Expenditure - Member Ministry of Finance (4) AS& FA, Ministry of WCD - Member (5) Representative of M/o Rural Development - Member (6) Representative* of Ministry of Drinking Water Supply and Sanitation - Member (7) Representative* of M/o H&FW - Member"
+      ]
+    },
+    {
+      "input": "Who serves as the Convener of the Mission Saksham Anganwadi and Poshan 2.0?",
+      "expected_output": "The Mission Director / DS serves as the Convener, and the position must be not below the rank of Joint Secretary.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 12,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p12_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 8 (8) Representative* of M/o Panchayati Raj - Member (9) Rep* of Dept. of School Education & Literacy - Member (10) Rep*. Of Ministry of Agriculture - Member (11) Rep*. Of Ministry of Social Justice &Empowerment - Member (12) Rep*. Of Food & Public Distribution - Member (13) Director, NIPCCD - Member (14) AS/Joint Secretary (in-charge), MWCD - Member (15) Technical Advisor, Food & Nutrition Board - Member (16) Secretary of States from five regions by rotation - Member (17) Director, NIN - Member (18) Mission Director /DS - Convener (* Not below the rank of Joint Secretary) 2.2 Roles and responsibilities of State Administration Nutrition requires convergence of various services that contribute to improved nutritional status. This requires strong and effective multi-department convergent efforts and actions to address malnutrition. Therefore, Chief Secretary of the States/UTs shall coordinate the activities of various departments through a State Level Ste"
+      ]
+    },
+    {
+      "input": "Which official is tasked with coordinating the activities of various departments at the state level?",
+      "expected_output": "The Chief Secretary of the States/UTs shall coordinate the activities of various departments through a State Level mechanism.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 12,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p12_c0",
+      "retrieval_context": [
+        "Saksham Anganwadi and Poshan 2.0 8 (8) Representative* of M/o Panchayati Raj - Member (9) Rep* of Dept. of School Education & Literacy - Member (10) Rep*. Of Ministry of Agriculture - Member (11) Rep*. Of Ministry of Social Justice &Empowerment - Member (12) Rep*. Of Food & Public Distribution - Member (13) Director, NIPCCD - Member (14) AS/Joint Secretary (in-charge), MWCD - Member (15) Technical Advisor, Food & Nutrition Board - Member (16) Secretary of States from five regions by rotation - Member (17) Director, NIN - Member (18) Mission Director /DS - Convener (* Not below the rank of Joint Secretary) 2.2 Roles and responsibilities of State Administration Nutrition requires convergence of various services that contribute to improved nutritional status. This requires strong and effective multi-department convergent efforts and actions to address malnutrition. Therefore, Chief Secretary of the States/UTs shall coordinate the activities of various departments through a State Level Ste"
+      ]
+    },
+    {
+      "input": "Who is responsible for coordinating the activities of various departments at the state level for the Mission Saksham Anganwadi and Poshan 2.0 scheme?",
+      "expected_output": "The Chief Secretary of the States/UTs shall coordinate the activities of various departments through a State Level Steering Committee.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 12,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p12_c1",
+      "retrieval_context": [
+        "to address malnutrition. Therefore, Chief Secretary of the States/UTs shall coordinate the activities of various departments through a State Level Steering Committee to ensure effective convergence between various schemes/programs having bearing on nutrition and review the progress made regarding Nutritional Indicators on regular basis. Secretaries of different departments may assess how their schemes/programs can positively impact nutrition levels and also how POSHAN Abhiyaan can be supported to build awareness and create Jan Andolan around nutrition. 2.3 Roles and responsibilities of District Administration The District Magistrate shall be the Nodal Point in the district for monitoring nutritional status and quality standards. The DM/Collector shall chair, supervise and monitor the activities of the District Nutrition Committee. The Members of the District Committee"
+      ]
+    },
+    {
+      "input": "What are the responsibilities of the District Magistrate (DM/Collector) under this scheme?",
+      "expected_output": "The District Magistrate shall be the nodal point in the district for monitoring nutritional status and quality standards, and shall chair, supervise and monitor the activities of the District Nutrition Committee.",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 12,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p12_c1",
+      "retrieval_context": [
+        "to address malnutrition. Therefore, Chief Secretary of the States/UTs shall coordinate the activities of various departments through a State Level Steering Committee to ensure effective convergence between various schemes/programs having bearing on nutrition and review the progress made regarding Nutritional Indicators on regular basis. Secretaries of different departments may assess how their schemes/programs can positively impact nutrition levels and also how POSHAN Abhiyaan can be supported to build awareness and create Jan Andolan around nutrition. 2.3 Roles and responsibilities of District Administration The District Magistrate shall be the Nodal Point in the district for monitoring nutritional status and quality standards. The DM/Collector shall chair, supervise and monitor the activities of the District Nutrition Committee. The Members of the District Committee"
+      ]
+    },
+    {
+      "input": "Which committee is mentioned in the excerpt?",
+      "expected_output": "District Committee",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 12,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p12_c2",
+      "retrieval_context": [
+        "bers of the District Committee"
+      ]
+    },
+    {
+      "input": "What fragment appears before 'of the District Committee' in the text?",
+      "expected_output": "bers",
+      "source": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf",
+      "page": 12,
+      "chunk_id": "Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines_p12_c2",
+      "retrieval_context": [
+        "bers of the District Committee"
+      ]
+    }
+  ]
+}

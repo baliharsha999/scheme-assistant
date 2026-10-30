@@ -1,0 +1,24 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.deepeval/
+
+# Environment files with secrets (pass at runtime instead)
+.env
+.env.*
+
+# Git files
+.git/
+.gitignore
+
+# Temporary and log files
+*.log
+*.tmp

@@ -1,0 +1,64 @@
+{
+  "retriever_evaluated": true,
+  "generator_evaluated": true,
+  "retriever_summary": {
+    "contextual_recall": {
+      "average_score": 0.8,
+      "pass_rate": 0.8,
+      "passed_count": 4,
+      "threshold": 0.5
+    },
+    "contextual_precision": {
+      "average_score": 0.6978,
+      "pass_rate": 0.8,
+      "passed_count": 4,
+      "threshold": 0.5
+    },
+    "diagnostics": {
+      "hit_rate_at_k": 0.8,
+      "hits_count": 4
+    }
+  },
+  "generator_summary": {
+    "controlled": {
+      "faithfulness": {
+        "average_score": 0.9,
+        "pass_rate": 1.0,
+        "passed_count": 5,
+        "threshold": 0.5
+      },
+      "answer_relevancy": {
+        "average_score": 0.88,
+        "pass_rate": 0.8,
+        "passed_count": 4,
+        "threshold": 0.5
+      },
+      "answer_correctness": {
+        "average_score": 0.76,
+        "pass_rate": 0.8,
+        "passed_count": 4,
+        "threshold": 0.5
+      }
+    },
+    "end_to_end": {
+      "faithfulness": {
+        "average_score": 1.0,
+        "pass_rate": 1.0,
+        "passed_count": 5,
+        "threshold": 0.5
+      },
+      "answer_relevancy": {
+        "average_score": 1.0,
+        "pass_rate": 1.0,
+        "passed_count": 5,
+        "threshold": 0.5
+      },
+      "answer_correctness": {
+        "average_score": 0.68,
+        "pass_rate": 0.6,
+        "passed_count": 3,
+        "threshold": 0.5
+      }
+    }
+  }
+}

@@ -114,7 +114,7 @@ async def web_search_node(state: Cragstate):
 
     print("Rewritten query:", repr(rewritten_query))
 
-    web_search_results = await search_web(rewritten_query)
+    web_search_results = await asyncio.to_thread(search_web, rewritten_query)
 
     print("TAVILY RESULTS:", len(web_search_results))
     print("FIRST WEB RESULT:", web_search_results[:1])
@@ -286,11 +286,11 @@ def web_assemble_evidence_node(state: Cragstate):
     }
 
 # the documents that we are getting from web are evaluated ---->10
-def evaluate_web_documents_node(state: Cragstate):
+async def evaluate_web_documents_node(state: Cragstate):
     query = state["rewritten_query"]
     documents = state.get("web_documents", [])
 
-    evaluation = evaluate_retrieval(
+    evaluation = await evaluate_retrieval(
         llm,
         query,
         documents

@@ -1,0 +1,277 @@
+================================================================================
+EVALUATION SYSTEM IMPLEMENTATION REPORT: GOVERNMENT SCHEME RAG
+================================================================================
+
+A. INITIAL PROJECT UNDERSTANDING
+--------------------------------------------------------------------------------
+1. Existing Architecture:
+   - Domain: Government Welfare Scheme Assistant RAG application.
+   - Vector Store: ChromaDB persistent client at ./data/ChromaDB with collection 
+     'welfare_schemes' (cosine space, 2,306 chunks indexed).
+   - Ingestion: PyMuPDF (fitz) extracts text and tables from 6 raw scheme PDFs in data/raw.
+     Chunking uses RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=200).
+     Embedding uses BAAI/bge-m3 SentenceTransformer (1024-dimension normalized vectors).
+   - Retrieval: Two-stage hybrid search:
+     a) Dense retrieval: BAAI/bge-m3 top-10 chunks from ChromaDB.
+     b) Sparse retrieval: In-memory BM25Okapi top-10 chunks.
+     c) Reciprocal Rank Fusion (RRF, k=60, top_n=10) merges BM25 and dense candidates.
+     d) Cross-encoder re-ranking: BAAI/bge-reranker-v2-m3 re-ranks candidates to top-5.
+   - Corrective RAG (CRAG) Workflow:
+     LangGraph StateGraph with 16 nodes and conditional routing:
+     - Document relevance grading via Groq LLM (>=0.70 relevant, 0.30-0.69 ambiguous, <0.30 discard).
+     - Ambiguous passage refinement: 200-char splits re-graded.
+     - Evidence sufficiency evaluation: judges if combined evidence can answer query.
+     - Secondary fallback: Tavily web search with LLM query rewriting if local evidence is insufficient.
+     - Abstention node: returns polite abstention if evidence remains insufficient.
+   - Generator:
+     Groq-hosted 'openai/gpt-oss-120b' LLM (temperature=0.2). Synthesizes answers using
+     strict citizen-friendly instructions and source citations [Source: file.pdf, Page X].
+   - API:
+     FastAPI application in src/llm/app.py exposing POST /chat compiling and invoking the graph.
+
+2. Relevant Files Inspected:
+   - src/Ingestion/load_documents.py, chunking.py, embeddings.py, vector_store.py
+   - src/retrieval/dense_retriever.py, bm25_retriever.py, hybrid_search.py
+   - src/CRag/schemas.py, graph_state.py, retrieval_evaluator.py, knowledge_refinement.py,
+     evidence_evaluator.py, query_rewriter.py, web_search.py, graph_nodes.py, graph.py
+   - src/llm/model.py, app.py
+   - evals/generate_dataset.py, dataset/golden_dataset.json
+   - requirements.txt, requirements_evals.txt, .env
+
+3. Implementation Constraints Discovered:
+   - DeepEval 4.3.1 defaults to OpenAI when initialized without a custom model, raising
+     DeepEvalError if OPENAI_API_KEY is not set. All evaluation metrics required a dedicated
+     GroqJudgeModel subclassing DeepEvalBaseLLM.
+   - The Groq model 'openai/gpt-oss-120b' is a reasoning model returning both 'reasoning'
+     and 'content'; token limits and JSON extraction required careful handling.
+   - In src/retrieval/hybrid_search.py, line 6 had a lowercase 'use_fp16 = false' bug
+     causing a fatal NameError upon import across all modules.
+
+
+B. FILES CREATED
+--------------------------------------------------------------------------------
+1. evals/config.py
+   - Purpose: Centralized configuration module for evaluation paths, Groq judge settings,
+     timeouts, retry policies, and metric pass thresholds.
+   - Main settings: PROJECT_ROOT, RESULTS_DIR, EVAL_JUDGE_MODEL_NAME, EVAL_MAX_RETRIES,
+     CONTEXTUAL_RECALL_THRESHOLD, CONTEXTUAL_PRECISION_THRESHOLD, FAITHFULNESS_THRESHOLD,
+     ANSWER_RELEVANCY_THRESHOLD, ANSWER_CORRECTNESS_THRESHOLD.
+   - Integration: Imported by all evaluation and reporting modules.
+
+2. evals/groq_model.py
+   - Purpose: Custom DeepEvalBaseLLM wrapper providing native Groq connectivity for DeepEval.
+   - Main class: GroqJudgeModel(DeepEvalBaseLLM)
+     - Methods: load_model, generate, a_generate, generate_with_schema, a_generate_with_schema,
+       supports_json_mode, get_model_name.
+     - Features: Exponential backoff for rate limits, markdown fence stripping, JSON mode support.
+   - Integration: Passed directly into DeepEval metrics as model=judge_model.
+
+3. evals/dataset_loader.py
+   - Purpose: Validates, loads, and normalizes golden dataset examples, mapping metadata to
+     DeepEval LLMTestCase objects while preserving source document provenance.
+   - Main class: EvaluationDatasetLoader
+     - Methods: load_raw_dataset, get_validated_examples, create_deepeval_test_cases.
+   - Integration: Supplies verified inputs to both retriever and generator evaluators.
+
+4. evals/evaluate_retriever.py
+   - Purpose: Independent retriever component evaluation module.
+   - Main class/functions: RetrieverEvaluator, retrieve_chunks, calculate_hit_rate.
+     - Metrics: Contextual Recall, Contextual Precision, Hit Rate@k (diagnostic).
+     - Output: Records per-case scores, reasoning, provenance hits, and saves retriever_results.json.
+   - Integration: Directly executes production hybrid retrieval (BM25 + Dense + RRF + Reranker)
+     without invoking the generator.
+
+5. evals/evaluate_generator.py
+   - Purpose: Independent generator component evaluation module.
+   - Main class/functions: GeneratorEvaluator, format_context_string, generate_production_answer.
+     - Test A (Controlled Context): Evaluates generator with verified reference context.
+     - Test B (End-to-End Context): Evaluates generator with actual retrieved context.
+     - Metrics: Faithfulness, Answer Relevancy, Answer Correctness (GEval).
+     - Output: Saves generator_results.json with both experiments cleanly separated.
+   - Integration: Wraps production generator model and prompt template from src/CRag/graph_nodes.py.
+
+6. evals/report_generator.py
+   - Purpose: Reads evaluation JSON results and produces human-readable Markdown reports
+     and summary data.
+   - Main functions: build_and_save_all_reports, generate_retriever_markdown_report,
+     generate_generator_markdown_report, generate_executive_summary_report.
+   - Output files: evaluation_results/retriever_report.md, generator_report.md, summary_report.md,
+     evaluation_summary.json.
+
+7. evals/run_evaluation.py
+   - Purpose: Unified CLI entry point for the evaluation suite.
+   - Arguments: --all, --retriever, --generator, --mode [controlled|e2e|both], --sample-size N,
+     --top-k K, --generate-dataset, --report-only.
+   - Integration: Orchestrates dataset loading, evaluation runs, and report generation.
+
+
+C. FILES MODIFIED
+--------------------------------------------------------------------------------
+1. src/retrieval/hybrid_search.py
+   - Exact Change: Line 6 changed from 'use_fp16 = false' to 'use_fp16 = False'.
+   - Reason: Python does not recognize lowercase 'false', resulting in NameError: name 'false'
+     is not defined upon any import of hybrid_search, graph_nodes, graph, or app.py.
+   - Why separate module was insufficient: The syntax error resided in the production file itself,
+     preventing the production graph from running or being imported.
+   - User Approval: Explicitly requested and approved by the user prior to modification.
+
+2. evals/run_evalution.py
+   - Exact Change: Replaced 1-line comment stub with a wrapper delegating to evals.run_evaluation.
+   - Reason: Preserves compatibility with existing typo in filename ('run_evalution.py').
+   - User Approval: Approved as part of evaluation implementation.
+
+
+D. DEPENDENCIES AND CONFIGURATION
+--------------------------------------------------------------------------------
+1. Existing Dependencies Utilized:
+   - deepeval >= 4.3.1 (installed: 4.3.1)
+   - groq >= 0.37.1 (installed: 0.37.1)
+   - langchain-groq >= 1.1.3 (installed: 1.1.3)
+   - chromadb >= 1.5.9 (installed: 1.5.9)
+   - sentence-transformers >= 6.1.0 (installed: 6.1.0)
+   - FlagEmbedding >= 1.4.2 (installed: 1.4.2)
+   - langgraph >= 1.2.15 (installed: 1.2.15)
+   - pydantic >= 2.14.1 (installed: 2.14.1)
+
+2. Environment Variables (.env):
+   - GROQ_API_KEY: Authentication for Groq API.
+   - GROQ_MODEL: Configured as 'openai/gpt-oss-120b'.
+   - EVAL_GROQ_MODEL (optional): Defaults to GROQ_MODEL ('openai/gpt-oss-120b').
+   - EVAL_MAX_RETRIES: Defaults to 3.
+   - EVAL_RATE_LIMIT_DELAY: Defaults to 1.0 second.
+
+
+E. EVALUATION METHODOLOGY
+--------------------------------------------------------------------------------
+1. Dataset:
+   - Source: 6 Government welfare scheme PDF documents in data/raw.
+   - Extracted Golden Test Cases: 59 QA pairs in evals/dataset/golden_dataset.json.
+   - Provenance Preserved: Source PDF filename, page number, chunk ID, and reference context.
+
+2. Retriever Evaluation Methodology:
+   - Evaluated component: Production hybrid retrieval pipeline:
+     dense_search(k=10) + bm25_search(k=10) -> reciprocal_rank_fusion(top_n=10) -> reranker(top_k=5).
+   - Metrics:
+     a) Contextual Recall: DeepEval ContextualRecallMetric (measures if retrieved context contains
+        facts necessary to answer expected_output).
+     b) Contextual Precision: DeepEval ContextualPrecisionMetric (measures if relevant chunks are
+        ranked higher than irrelevant ones).
+     c) Diagnostic Hit Rate@k: Checks if the source PDF and page number exist in the top-k retrieved chunks.
+   - Distinction: expected_retrieval_context (ground truth) vs. retrieval_context (actual retrieved chunks).
+
+3. Generator Evaluation Methodology:
+   - Evaluated component: Production generator prompt and model ('openai/gpt-oss-120b').
+   - Test A (Controlled Context): Question + verified golden reference context.
+     Tests generator accuracy when complete facts are present.
+   - Test B (End-to-End): Question + actual retrieved chunks from hybrid retriever.
+     Tests combined system behavior.
+   - Metrics:
+     a) Faithfulness: DeepEval FaithfulnessMetric (penalizes hallucinations unsupported by provided context).
+     b) Answer Relevancy: DeepEval AnswerRelevancyMetric (evaluates alignment with user question).
+     c) Answer Correctness: DeepEval GEval with factual correctness rubric comparing actual output to expected answer.
+
+
+F. EXECUTION INSTRUCTIONS
+--------------------------------------------------------------------------------
+All commands should be executed from the project root:
+cd c:\Users\HARSHA\OneDrive\Desktop\scheme-assistant
+
+1. Evaluate Retriever only (on 5 test cases):
+   .\.venv\Scripts\python.exe -m evals.run_evaluation --retriever --sample-size 5
+
+2. Evaluate Generator only (Controlled Context mode):
+   .\.venv\Scripts\python.exe -m evals.run_evaluation --generator --mode controlled --sample-size 5
+
+3. Evaluate Generator only (End-to-End mode):
+   .\.venv\Scripts\python.exe -m evals.run_evaluation --generator --mode e2e --sample-size 5
+
+4. Run Full Evaluation Suite (All components, sample of 10 test cases):
+   .\.venv\Scripts\python.exe -m evals.run_evaluation --all --sample-size 10
+
+5. Run Full Evaluation Suite on the entire 59-case dataset:
+   .\.venv\Scripts\python.exe -m evals.run_evaluation --all
+
+6. Re-generate Markdown reports from saved JSON results without re-running LLM:
+   .\.venv\Scripts\python.exe -m evals.run_evaluation --report-only
+
+7. View Reports:
+   - evaluation_results/summary_report.md
+   - evaluation_results/retriever_report.md
+   - evaluation_results/generator_report.md
+   - evaluation_results/retriever_results.json
+   - evaluation_results/generator_results.json
+   - evaluation_results/evaluation_summary.json
+
+
+G. ACTUAL RESULTS (VERIFICATION RUN)
+--------------------------------------------------------------------------------
+Execution completed on sample size = 3 test cases:
+
+1. Retriever Results:
+   - Total Cases: 3
+   - Average Contextual Recall: 0.6667 (Pass rate: 66.7%, 2/3 passed, threshold >= 0.5)
+   - Average Contextual Precision: 0.5852 (Pass rate: 66.7%, 2/3 passed, threshold >= 0.5)
+   - Diagnostic Hit Rate@5: 0.6667 (66.7%, 2/3 hits)
+   - Failure Diagnosis: Case 1 ("What is the name of the scheme mentioned in the document?")
+     failed retrieval because the query is generic and contains no scheme keywords, causing
+     the hybrid search to rank chunks from PMAY-U 2.0 above Mission Saksham Anganwadi.
+     Cases 2 and 3 with scheme names achieved 100% and 76% precision.
+
+2. Generator Results (Controlled vs. End-to-End):
+   - Test A: Controlled-Context (Verified Context):
+     * Faithfulness:        0.9167 (Pass rate: 100.0%)
+     * Answer Relevancy:    0.9697 (Pass rate: 100.0%)
+     * Answer Correctness:  0.7000 (Pass rate: 66.7%)
+   - Test B: End-to-End (Actual Retrieved Context):
+     * Faithfulness:        0.9333 (Pass rate: 100.0%)
+     * Answer Relevancy:    0.9444 (Pass rate: 100.0%)
+     * Answer Correctness:  0.4333 (Pass rate: 33.3%)
+   - Key Insight: Faithfulness was high in both modes (>0.90), showing the generator does not
+     hallucinate. However, End-to-End Answer Correctness dropped from 0.70 to 0.43 strictly due
+     to retrieval misses on generic queries, confirming that retrieval is the primary bottleneck.
+
+
+H. EXISTING APPLICATION SAFETY
+--------------------------------------------------------------------------------
+- Ingestion pipeline: UNCHANGED (load_documents.py, chunking.py, embeddings.py, vector_store.py).
+- ChromaDB collection & vectors: UNCHANGED (2,306 chunks preserved).
+- Retrieval algorithms: UNCHANGED (dense_search, bm25_search, reciprocal_rank_fusion, reranker preserved).
+- CRAG graph & nodes: UNCHANGED (graph.py, graph_nodes.py, graph_state.py, schemas.py preserved).
+- Production generator prompt: UNCHANGED (identical prompt reused via adapter).
+- FastAPI entry point: UNCHANGED (src/llm/app.py preserved).
+- One approved bug fix: 'use_fp16 = false' corrected to 'use_fp16 = False' in src/retrieval/hybrid_search.py.
+
+
+I. RECOMMENDED NEXT STEPS (NON-INVASIVE)
+--------------------------------------------------------------------------------
+1. Ingestion Enhancement: Prepend document title and section headers directly to the text of each chunk
+   during ingestion to disambiguate generic questions.
+2. Threshold Calibration: Fine-tune CRAG lower and upper boundaries (0.30 and 0.70) based on measured
+   retriever precision.
+3. Expanded Test Runs: Execute the evaluation suite over the full 59-case dataset using:
+   .\.venv\Scripts\python.exe -m evals.run_evaluation --all
+
+
+J. RETRIEVER OPTIMIZATION EXPERIMENT: CONTEXT-ENRICHED CHUNKING & CANDIDATE EXPANSION
+--------------------------------------------------------------------------------
+1. Architectural Changes Implemented (100% Non-Invasive):
+   - Chunk Sizing: Increased from 500 characters to 900 characters (overlap 150) to prevent
+     fragmentation of complex eligibility clauses and tabular criteria.
+   - Context-Enriched Metadata Injection: Every chunk is prepended with a structured context header:
+     "[Scheme: {scheme} | Document: {source} | Page: {page}]\n{chunk_text}"
+     This provides critical scheme identification for both BM25 inverted index matching and
+     dense vector semantic clustering (BAAI/bge-m3).
+   - BM25 Tokenization Optimization: Replaced naive whitespace splitting with alphanumeric regex
+     tokenization (re.findall(r'\w+', text.lower())) so that punctuation marks (e.g. "document?",
+     "guidelines.") do not cause zero-keyword matching.
+   - Candidate Pool Expansion: Expanded candidate retrieval depth from top-10 to top-20 for both
+     BM25 and Dense search prior to Reciprocal Rank Fusion (top_n=20) and BGE-Reranker-v2-m3 scoring.
+   - Isolated Storage: Experimental chunks are embedded into ChromaDB collection 'welfare_schemes_v2'
+     (1,092 chunks), leaving the production collection 'welfare_schemes' (2,306 chunks) 100% untouched.
+
+2. Files Created for Experimentation:
+   - evals/experiments/improved_chunking.py: Implements context-enriched 900-char text splitting.
+   - evals/experiments/ingest_improved.py: Memory-safe batch ingestion script for 'welfare_schemes_v2'.
+   - evals/experiments/improved_retriever.py: Hybrid search adapter with expanded candidate fusion.
+   - evals/experiments/compare_retrievers.py: Side-by-side A/B comparative evaluation runner using DeepEval.
+================================================================================

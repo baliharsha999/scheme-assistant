@@ -1,0 +1,356 @@
+{
+  "component": "Generator",
+  "production_model": "openai/gpt-oss-120b",
+  "judge_model": "openai/gpt-oss-120b",
+  "total_cases": 5,
+  "controlled_context_evaluation": {
+    "total_cases": 5,
+    "metrics": {
+      "faithfulness": {
+        "average_score": 0.9,
+        "pass_rate": 1.0,
+        "passed_count": 5,
+        "threshold": 0.5
+      },
+      "answer_relevancy": {
+        "average_score": 0.88,
+        "pass_rate": 0.8,
+        "passed_count": 4,
+        "threshold": 0.5
+      },
+      "answer_correctness": {
+        "average_score": 0.76,
+        "pass_rate": 0.8,
+        "passed_count": 4,
+        "threshold": 0.5
+      }
+    },
+    "cases": [
+      {
+        "case_id": "eval_case_1",
+        "input": "What is the name of the scheme mentioned in the document?",
+        "expected_output": "The scheme is called \"Mission Saksham Anganwadi and Poshan 2.0\".",
+        "generated_answer": "The scheme is called **“Saksham Anganwadi and Poshan 2.0.”**【Source: Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf, Page 1】",
+        "provided_context": [
+          "Saksham Anganwadi and Poshan 2.0 Mission Saksham Anganwadi and Poshan 2.0 Scheme Guidelines Ministry of Women and Child Development Government of India"
+        ],
+        "faithfulness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because there are no contradictions, showing the actual output perfectly aligns with the retrieval context."
+        },
+        "answer_relevancy": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because the answer directly addressed the question with no irrelevant content, earning a perfect relevancy rating!"
+        },
+        "answer_correctness": {
+          "score": 0.5,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The answer provides the scheme name but omits the required \"Mission\" prefix, so it does not exactly match the expected output; otherwise it is relevant and includes a citation, but the missing word reduces factual accuracy."
+        },
+        "is_success": true
+      },
+      {
+        "case_id": "eval_case_2",
+        "input": "Which ministry issued the guidelines for the Mission Saksham Anganwadi and Poshan 2.0?",
+        "expected_output": "The guidelines were issued by the Ministry of Women and Child Development, Government of India.",
+        "generated_answer": "The guidelines for the **Mission Saksham Anganwadi and Poshan 2.0** were issued by the **Ministry of Women and Child Development**, Government of India.  \n\n[Source: Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf, Page 1]",
+        "provided_context": [
+          "Saksham Anganwadi and Poshan 2.0 Mission Saksham Anganwadi and Poshan 2.0 Scheme Guidelines Ministry of Women and Child Development Government of India"
+        ],
+        "faithfulness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because there are no contradictions, indicating perfect faithfulness."
+        },
+        "answer_relevancy": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because the response was completely on‑topic with no irrelevant content, so it couldn’t be any higher."
+        },
+        "answer_correctness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The response correctly states that the Ministry of Women and Child Development issued the guidelines, matching the expected answer, and provides the same factual information without errors; the added citation does not detract from completeness."
+        },
+        "is_success": true
+      },
+      {
+        "case_id": "eval_case_3",
+        "input": "What are the main sections listed in the contents of the Saksham Anganwadi and Poshan 2.0 guidelines?",
+        "expected_output": "The contents list the following main sections: 1. INTRODUCTION, 1.1 Vision, 1.2 Objectives, 1.3 Important components of Saksham Anganwadi and Poshan 2.0, 2. INSTITUTIONAL FRAMEWORK FOR IMPLEMENTATION, 2.1 Framework at Central Level, 2.2 Roles and responsibilities of State Administration, 2.3 Roles and responsibilities of District Administration, 2.4 Roles and Responsibilities of Anganwadi Workers.",
+        "generated_answer": "**Main sections shown in the contents of the Saksham Anganwadi and Poshan 2.0 guidelines**\n\n- **1. INTRODUCTION**  \n  (includes Vision, Objectives, and Important components)\n\n- **2. INSTITUTIONAL FRAMEWORK FOR IMPLEMENTATION**  \n  (covers the central‑level framework and the roles and responsibilities of State, District, and Anganwadi workers)\n\nThese are the primary headings listed in the contents page of the guidelines.  \n\n[Source: Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf, Page 2]",
+        "provided_context": [
+          "Saksham Anganwadi and Poshan 2.0 Contents 1. INTRODUCTION ................................................................................ 3 1.1 Vision ..................................................................................................................... 4 1.2 Objectives .............................................................................................................. 4 1.3 Important components of Saksham Anganwadi and Poshan 2.0 ............................. 5 2. INSTITUTIONAL FRAMEWORK FOR IMPLEMENTATION ............. 7 2.1 Framework at Central Level ................................................................................... 7 2.2 Roles and responsibilities of State Administration ................................................... 8 2.3 Roles and responsibilities of District Administration ................................................ 8 2.4 Roles and Responsibilities of Anganwadi Workers ................................................. 9 2.5 Ro"
+        ],
+        "faithfulness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because there are no contradictions, indicating perfect faithfulness."
+        },
+        "answer_relevancy": {
+          "score": 0.4,
+          "threshold": 0.5,
+          "passed": false,
+          "reason": "The score is 0.40 because the response never actually lists the main sections— it only says sections are shown, claims to present headings without enumerating them, and provides only a citation, so most of the answer is irrelevant to the question."
+        },
+        "answer_correctness": {
+          "score": 0.3,
+          "threshold": 0.5,
+          "passed": false,
+          "reason": "The response captures the two top‑level sections (INTRODUCTION and INSTITUTIONAL FRAMEWORK) but omits all sub‑sections listed in the expected output (e.g., 1.1 Vision, 1.2 Objectives, 2.1 Framework at Central Level, etc.), so it does not fully match the required content."
+        },
+        "is_success": false
+      },
+      {
+        "case_id": "eval_case_4",
+        "input": "Which section of the guidelines covers the roles and responsibilities of Anganwadi Workers?",
+        "expected_output": "The roles and responsibilities of Anganwadi Workers are covered in section 2.4.",
+        "generated_answer": "The guidelines place the roles and responsibilities of Anganwadi Workers in **Section 2.4 – “Roles and Responsibilities of Anganwadi Workers.”**  \n\n[Source: Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf, Page 2]",
+        "provided_context": [
+          "Saksham Anganwadi and Poshan 2.0 Contents 1. INTRODUCTION ................................................................................ 3 1.1 Vision ..................................................................................................................... 4 1.2 Objectives .............................................................................................................. 4 1.3 Important components of Saksham Anganwadi and Poshan 2.0 ............................. 5 2. INSTITUTIONAL FRAMEWORK FOR IMPLEMENTATION ............. 7 2.1 Framework at Central Level ................................................................................... 7 2.2 Roles and responsibilities of State Administration ................................................... 8 2.3 Roles and responsibilities of District Administration ................................................ 8 2.4 Roles and Responsibilities of Anganwadi Workers ................................................. 9 2.5 Ro"
+        ],
+        "faithfulness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because there are no contradictions, indicating perfect faithfulness."
+        },
+        "answer_relevancy": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because the answer directly addressed the question about the guidelines section for Anganwadi Workers with no irrelevant content."
+        },
+        "answer_correctness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The actual output correctly identifies section 2.4 as covering the roles and responsibilities of Anganwadi Workers, matching the expected answer; it also adds a citation but fully answers the question without omissions."
+        },
+        "is_success": true
+      },
+      {
+        "case_id": "eval_case_5",
+        "input": "Which section outlines the roles and responsibilities of Anganwadi Helpers?",
+        "expected_output": "Section 2.5 covers the roles and responsibilities of Anganwadi Helpers.",
+        "generated_answer": "The **Roles and responsibilities of Anganwadi Helpers** are outlined in **Section 2.5** of the scheme guidelines.  \n\n**Source:** Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines, Page 2 – shows “2.5 Roles and responsibilities of Anganwadi Helpers”【Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf, Page 2】.",
+        "provided_context": [
+          "..................................... 8 2.4 Roles and Responsibilities of Anganwadi Workers ................................................. 9 2.5 Roles and responsibilities of Anganwadi Helpers .................................................. 11 2.6 Poshan Tracker.................................................................................................... 12 2.7 Fund Flow ............................................................................................................ 12 2.8 Funding Pattern ................................................................................................... 12 2.9 Social Audit .......................................................................................................... 12 2.10 Evaluation ............................................................................................................ 13 3. ANGANWADI SERVICES SCHEME ............................................... 14 3.1 Package of Services ...................."
+        ],
+        "faithfulness": {
+          "score": 0.5,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 0.50 because the output claims the section is on page 2 while the retrieval context places it on page 11, directly contradicting the source."
+        },
+        "answer_relevancy": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because the answer directly addressed the question about the Anganwadi Helpers section with no irrelevant content, earning a perfect relevancy rating!"
+        },
+        "answer_correctness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The actual output correctly identifies Section 2.5 as the section covering the roles and responsibilities of Anganwadi Helpers, matching the expected answer. It fully answers the question and adds a relevant source citation without introducing errors, demonstrating complete alignment with the evaluation steps."
+        },
+        "is_success": true
+      }
+    ]
+  },
+  "end_to_end_evaluation": {
+    "total_cases": 5,
+    "metrics": {
+      "faithfulness": {
+        "average_score": 1.0,
+        "pass_rate": 1.0,
+        "passed_count": 5,
+        "threshold": 0.5
+      },
+      "answer_relevancy": {
+        "average_score": 1.0,
+        "pass_rate": 1.0,
+        "passed_count": 5,
+        "threshold": 0.5
+      },
+      "answer_correctness": {
+        "average_score": 0.68,
+        "pass_rate": 0.6,
+        "passed_count": 3,
+        "threshold": 0.5
+      }
+    },
+    "cases": [
+      {
+        "case_id": "eval_case_1",
+        "input": "What is the name of the scheme mentioned in the document?",
+        "expected_output": "The scheme is called \"Mission Saksham Anganwadi and Poshan 2.0\".",
+        "generated_answer": "The document refers to the **“Interest Subsidy Scheme” (ISS)**, which is implemented under **Pradhan Mantri Awas Yojana – Urban 2.0 (PMAY‑U 2.0)**【Source: Operational-Guidelines-of-PMAY-U-2.pdf, Page 64】.",
+        "retrieved_context": [
+          "the context shall mean and include their successors, assignees and administrators) on the SECOND \nPART;\nWHEREAS, the Ministry of Housing and Urban Affairs (MoHUA), Government of India is \nimplementing the “Interest Subsidy Scheme” (hereinafter called the “ISS”) under Pradhan \nMantri Awas Yojana - Urban 2.0 (PMAY-U 2.0) as per ‘Scheme Guidelines’ to support the eligible \nbeneficiaries by providing the interest subsidy on home loans and to address the housing needs",
+          "timeline by signing a Memorandum of Agreement (MoA) with MoHUA as per the format \nat Annexure-1A. \n1.8 \nThe houses constructed/ acquired/purchased with Central Assistance under the Scheme \nshould be in the name of the female head of the household or in the joint name of the \nmale head of the household and his wife and only in cases when there is no adult female \nmember in the family, the house can be in the name of male member of the household. In",
+          "on unified Web-portal. The beneficiaries will be validated by States/UTs/ULBs as per the \neligibility criteria of the scheme guidelines. States/UTs/ULBs should verify and exclude the \nbeneficiary families from the list who is having a pucca house in rural area and migrated to \ncity to take advantage of PMAY-U 2.0.\n4.5 \nStates/UTs/ULBs should also identify the beneficiaries from the Special Focused Group \n(SFG), as mentioned in para 3.4, for inclusion in PMAY-U 2.0 and accordingly provide",
+          "Perspective Plan, if any, under the Scheme:- \n \nS. \nNo. \nProposed activities/actions under the Scheme \nPrescribed \nTimelines \n1. \nCommunication of Notional Allocation of funds under \nthe ‘Grants-in-Aid’ component by the Ministry to the \nStates/UT Governments. \nDuring 1st week \nof April \n2. \n Updating physical and financial progress on the portal \nwith regards to approved projects carried out during the \npreceding financial year \nBy 1st week of April \n3.",
+          "PRADHAN MANTRI -ANUSUCHIT JAATI ABHYUDAY YOJANA (PM-AJAY) \n \nCentrally Sponsored Scheme of Pradhan Mantri Anusuchit Jaati Abhyuday Yojana \n(PM-AJAY) \n \nList of Annexures \n \nAnnexure \nNo. \nParticulars \nPage No. \nI \nIllustrative list of projects under various domains for\ndevelopment of Scheduled Castes families under the\nScheme \n38 \nII \nComposition of Central and State Advisory Committees \n40 \nIII \nComposition of Project Appraisal cum Convergence\nCommittees (PACC) and Village Level Convergence"
+        ],
+        "faithfulness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because there are no contradictions, indicating perfect faithfulness."
+        },
+        "answer_relevancy": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because the answer directly addressed the question with no irrelevant content, earning a perfect relevancy rating!"
+        },
+        "answer_correctness": {
+          "score": 0.0,
+          "threshold": 0.5,
+          "passed": false,
+          "reason": "The actual output names the “Interest Subsidy Scheme (ISS)” under PMAY‑U 2.0, which does not match the expected answer “Mission Saksham Anganwadi and Poshan 2.0”; it fails to provide the correct scheme name and thus lacks factual alignment."
+        },
+        "is_success": false
+      },
+      {
+        "case_id": "eval_case_2",
+        "input": "Which ministry issued the guidelines for the Mission Saksham Anganwadi and Poshan 2.0?",
+        "expected_output": "The guidelines were issued by the Ministry of Women and Child Development, Government of India.",
+        "generated_answer": "The guidelines for **Mission Saksham Anganwadi and Poshan 2.0** were issued by the **Ministry of Women and Child Development, Government of India**【Source: Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf, Page 1】.",
+        "retrieved_context": [
+          "Saksham Anganwadi and Poshan 2.0 \n \n \n \n \n \n \nMission Saksham \nAnganwadi and \nPoshan 2.0 \n \nScheme Guidelines \n \n \n \n \nMinistry of Women and Child Development \nGovernment of India",
+          "Saksham Anganwadi and Pos: Mission Saksham\nAnganwadi and\nPoshan 2.0\nScheme Guidelines\nMinistry of Women and Child Development\nGovernment of India\n\nMinistry of Women and Child Development",
+          "Saksham Anganwadi and Poshan 2.0 \n \n53 \n \n \nKey \nComponents\nDetails\nBudget\n10.\nIncentive for \nKuposhan \nMukt villages \nIn Saksham Anganwadi and Poshan 2.0, \nthere has been a provision of incentive for \n‘Kuposhan Mukt Villages’ which will be \ndistributed \naway \nto \nqualified \nvillages/panchayats. The incentives will be \ngiven annually on the recommendations of \nthe States/UTs and finalized by a \ncommittee to be constituted. \nSeparate guidelines will be issued to \nStates/UTs on the same by MoWCD.",
+          "Saksham Anganwadi and Poshan 2.0 \n \n38 \n \n \n \n \nTo strengthen Anganwadi Services and to achieve their intended outcomes, it is vital to build \nthe capacity and confidence through trainings of frontline functionaries. The detailed \nguidelines for training of frontline workers have been indicated at Annexure-IV. \nThese guidelines are in continuation of Streamlined Guidelines issued on 13.01.2021. \n***",
+          "Saksham Anganwadi and Poshan 2.0 \n3\n \n \n \n \nSaksham Anganwadi and Poshan 2.0 (hereinafter referred to as Poshan 2.0) is an \nIntegrated Nutrition Support Programme. It seeks to address the challenges of \nmalnutrition in children, adolescent girls, pregnant women and lactating mothers through \na strategic shift in nutrition content and delivery and by creation of a convergent eco-\nsystem to develop and promote practices that nurture health, wellness and immunity."
+        ],
+        "faithfulness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because there are no contradictions, indicating perfect faithfulness."
+        },
+        "answer_relevancy": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because the response was completely on‑topic with no irrelevant content, so it couldn’t be higher."
+        },
+        "answer_correctness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The actual output correctly names the Ministry of Women and Child Development, matching the expected answer, and fully addresses the question; the added citation does not affect correctness."
+        },
+        "is_success": true
+      },
+      {
+        "case_id": "eval_case_3",
+        "input": "What are the main sections listed in the contents of the Saksham Anganwadi and Poshan 2.0 guidelines?",
+        "expected_output": "The contents list the following main sections: 1. INTRODUCTION, 1.1 Vision, 1.2 Objectives, 1.3 Important components of Saksham Anganwadi and Poshan 2.0, 2. INSTITUTIONAL FRAMEWORK FOR IMPLEMENTATION, 2.1 Framework at Central Level, 2.2 Roles and responsibilities of State Administration, 2.3 Roles and responsibilities of District Administration, 2.4 Roles and Responsibilities of Anganwadi Workers.",
+        "generated_answer": "**Main sections shown in the contents of the “Saksham Anganwadi and Poshan 2.0” guidelines**\n\n1. **INTRODUCTION** – starts on page 3  \n   * Sub‑sections listed under this heading:  \n     - Vision (page 4)  \n     - Objectives (page 4)  \n     - Important components of Saksham Anganwadi and Poshan 2.0 (page 5)  \n\n2. **INSTITUTIONAL FRAMEWORK FOR IMPLEMENTATION** – starts on page 7  \n   * Sub‑sections include:  \n     - Framework at Central Level (page 7)  \n\nThese are the primary sections that appear in the table of contents of the guideline document.  \n\n*Sources: “Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf”, Page 2 (contents list and subsections) and Page 2 (section 2 heading).*",
+        "retrieved_context": [
+          "Saksham Anganwadi and Poshan 2.0 \n \n \nContents \n1. \nINTRODUCTION ................................................................................ 3 \n1.1 \nVision ..................................................................................................................... 4 \n1.2 \nObjectives .............................................................................................................. 4 \n1.3",
+          "Saksham Anganwadi and Poshan 2.0 \n3\n \n \n \n \nSaksham Anganwadi and Poshan 2.0 (hereinafter referred to as Poshan 2.0) is an \nIntegrated Nutrition Support Programme. It seeks to address the challenges of \nmalnutrition in children, adolescent girls, pregnant women and lactating mothers through \na strategic shift in nutrition content and delivery and by creation of a convergent eco-\nsystem to develop and promote practices that nurture health, wellness and immunity.",
+          "1.2 \nObjectives .............................................................................................................. 4 \n1.3 \nImportant components of Saksham Anganwadi and Poshan 2.0 ............................. 5 \n2. \nINSTITUTIONAL FRAMEWORK FOR IMPLEMENTATION ............. 7 \n2.1 \nFramework at Central Level ................................................................................... 7 \n2.2",
+          "(SNP) for children of the age group of 06 months to 6 years, pregnant women \nand lactating mothers (PWLM); and for Adolescent Girls in the age group of \n14 to 18 years in Aspirational Districts and North Eastern Region (NER); \n Early Childhood Care and Education [3-6 years]and early stimulation for (0-3 \nyears); \n Anganwadi Infrastructure including modern, upgraded Saksham Anganwadi; \nand \n Poshan Abhiyaan \nThese guidelines are being issued under the provisions of Sections 4(a), 5(1) (a), 6",
+          "is being linked with the RCH Portal (Anmol) of MoHFW. \nPoshan 2.0 shall seek to optimize the quality and delivery of nutrition under the \nSupplementary Nutrition Program. \n1.3 \nImportant components of Saksham Anganwadi and Poshan 2.0 \nWith a view to address various gaps and shortcomings in the on-going nutrition \nprogramme and to improve implementation as well as to accelerate improvement in \nnutrition and child development outcomes, the existing scheme components have"
+        ],
+        "faithfulness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because there are no contradictions, indicating perfect faithfulness."
+        },
+        "answer_relevancy": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because the answer directly listed the main sections from the guidelines with no irrelevant content, perfectly matching the request."
+        },
+        "answer_correctness": {
+          "score": 0.4,
+          "threshold": 0.5,
+          "passed": false,
+          "reason": "The response correctly identifies the INTRODUCTION section and its three sub‑sections, matching the expected output, but it only lists one sub‑section (Framework at Central Level) under INSTITUTIONAL FRAMEWORK FOR IMPLEMENTATION, omitting the expected Roles and responsibilities of State, District, and Anganwadi Workers. Thus it is partially accurate but incomplete."
+        },
+        "is_success": false
+      },
+      {
+        "case_id": "eval_case_4",
+        "input": "Which section of the guidelines covers the roles and responsibilities of Anganwadi Workers?",
+        "expected_output": "The roles and responsibilities of Anganwadi Workers are covered in section 2.4.",
+        "generated_answer": "The guidelines place the **Roles and Responsibilities of Anganwadi Workers** in **Section 2.4**.\n\n- On page 13 the heading reads “2.4 Roles and Responsibilities of Anganwadi Workers”【Source: Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf, Page 13】.  \n- The table of contents on page 2 also lists “2.4 Roles and Responsibilities of Anganwadi Workers … 9”【Source: Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf, Page 2】.",
+        "retrieved_context": [
+          " ensure collation of monthly progress reports for the District and share with the \nState; \n While visiting AWCs, CDPO must conduct home-visits for pregnant women, \nnew-born and infants crossing 6-months and undertake age-appropriate \nnutrition counselling to train and demonstrate the importance of home-visits \nand counsel AWWs and motivate them to undertake regular home visits as \npart of their activity calendar. \n2.4 \nRoles and Responsibilities of Anganwadi Workers",
+          "and counsel AWWs and motivate them to undertake regular home visits as \npart of their activity calendar. \n2.4 \nRoles and Responsibilities of Anganwadi Workers \na. To elicit community support and participation in running the Poshan 2.0 \nprogramme. \nb. To learn to use and become proficient in the operations of the smartphone \nprovided to the AWC where she undertakes the voluntary work. \nc. To feed relevant beneficiary data in Poshan Tracker app on regular basis as",
+          "2.5 \nRoles and Responsibilities of Anganwadi Helpers \na. Cook and serve food to beneficiaries. \nb. Clean the Anganwadi premises daily and fetch water. \nc. Ensure cleanliness in young children. \nd. Bring children from the village community to the Anganwadi centre. \ne. Help AWW in smooth discharge of her duties. \nf. In absence of AWW, the Anganwadi Helper shall carry out her functions and \ndischarge her responsibilities.",
+          "identifying cases of juvenile diabetes. \nw. Maintain Covid-19 protocols. \nx. Inform the ANM in case of emergency cases like diarrhoea, cholera etc. \ny. To perform any bona fide task related to Saksham Anganwadi & Poshan 2.0 as \ndirected by Govt. of India depending on the circumstances. \n2.5 \nRoles and Responsibilities of Anganwadi Helpers \na. Cook and serve food to beneficiaries. \nb. Clean the Anganwadi premises daily and fetch water. \nc. Ensure cleanliness in young children.",
+          "2.3 \nRoles and responsibilities of District Administration ................................................ 8 \n2.4 \nRoles and Responsibilities of Anganwadi Workers ................................................. 9 \n2.5 \nRoles and responsibilities of Anganwadi Helpers .................................................. 11 \n2.6 \nPoshan Tracker.................................................................................................... 12 \n2.7"
+        ],
+        "faithfulness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because there are no contradictions, indicating perfect faithfulness."
+        },
+        "answer_relevancy": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because the answer directly addressed the question about the guidelines section for Anganwadi Workers with no irrelevant content."
+        },
+        "answer_correctness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The actual output correctly identifies section 2.4 as covering the roles and responsibilities of Anganwadi Workers, matching the expected answer, and fully addresses the question with accurate, relevant information."
+        },
+        "is_success": true
+      },
+      {
+        "case_id": "eval_case_5",
+        "input": "Which section outlines the roles and responsibilities of Anganwadi Helpers?",
+        "expected_output": "Section 2.5 covers the roles and responsibilities of Anganwadi Helpers.",
+        "generated_answer": "The **“Roles and responsibilities of Anganwadi Helpers”** are outlined in **Section 2.5** of the scheme guidelines.  \n\n- The table of contents lists Section 2.5 as “Roles and responsibilities of Anganwadi Helpers” (page 11)【Source: Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf, Page 2】.  \n- The detailed duties for Anganwadi Helpers are presented under the heading “2.5 Roles and Responsibilities of Anganwadi Helpers” (page 15)【Source: Mission Saksham Anganwadi and Poshan 2.0 scheme guidelines.pdf, Page 15】.",
+        "retrieved_context": [
+          "2.5 \nRoles and Responsibilities of Anganwadi Helpers \na. Cook and serve food to beneficiaries. \nb. Clean the Anganwadi premises daily and fetch water. \nc. Ensure cleanliness in young children. \nd. Bring children from the village community to the Anganwadi centre. \ne. Help AWW in smooth discharge of her duties. \nf. In absence of AWW, the Anganwadi Helper shall carry out her functions and \ndischarge her responsibilities.",
+          "identifying cases of juvenile diabetes. \nw. Maintain Covid-19 protocols. \nx. Inform the ANM in case of emergency cases like diarrhoea, cholera etc. \ny. To perform any bona fide task related to Saksham Anganwadi & Poshan 2.0 as \ndirected by Govt. of India depending on the circumstances. \n2.5 \nRoles and Responsibilities of Anganwadi Helpers \na. Cook and serve food to beneficiaries. \nb. Clean the Anganwadi premises daily and fetch water. \nc. Ensure cleanliness in young children.",
+          " ensure collation of monthly progress reports for the District and share with the \nState; \n While visiting AWCs, CDPO must conduct home-visits for pregnant women, \nnew-born and infants crossing 6-months and undertake age-appropriate \nnutrition counselling to train and demonstrate the importance of home-visits \nand counsel AWWs and motivate them to undertake regular home visits as \npart of their activity calendar. \n2.4 \nRoles and Responsibilities of Anganwadi Workers",
+          "and counsel AWWs and motivate them to undertake regular home visits as \npart of their activity calendar. \n2.4 \nRoles and Responsibilities of Anganwadi Workers \na. To elicit community support and participation in running the Poshan 2.0 \nprogramme. \nb. To learn to use and become proficient in the operations of the smartphone \nprovided to the AWC where she undertakes the voluntary work. \nc. To feed relevant beneficiary data in Poshan Tracker app on regular basis as",
+          "2.3 \nRoles and responsibilities of District Administration ................................................ 8 \n2.4 \nRoles and Responsibilities of Anganwadi Workers ................................................. 9 \n2.5 \nRoles and responsibilities of Anganwadi Helpers .................................................. 11 \n2.6 \nPoshan Tracker.................................................................................................... 12 \n2.7"
+        ],
+        "faithfulness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because there are no contradictions, indicating perfect faithfulness."
+        },
+        "answer_relevancy": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 1.00 because the answer directly addressed the question about the Anganwadi Helpers section with no irrelevant content, earning a perfect relevancy rating!"
+        },
+        "answer_correctness": {
+          "score": 1.0,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The actual output correctly identifies Section 2.5 as the section covering the roles and responsibilities of Anganwadi Helpers, matching the expected answer. It fully answers the question and adds supporting citations without introducing errors, thus aligning well with the evaluation steps."
+        },
+        "is_success": true
+      }
+    ]
+  }
+}
